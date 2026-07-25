@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: Worders API V1 Customers API
+  version: v1
+  description: Worders API endpoints (freelance invoice verification, webhooks, ...).
+servers:
+- url: https://api.worders.net
+tags:
+- name: Customers
+paths:
+  /V1/customers:
+    get:
+      summary: Search customers by name
+      tags:
+      - Customers
+      description: List or search customers. Used by the budget export scenario to resolve a customer name to a Plunet identifier before calling /V1/orders.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Partial name match (case-insensitive). Empty returns all customers.
+      responses:
+        '200':
+          description: matching customers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+        '401':
+          description: unauthenticated
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 12345
+          description: Plunet customer id
+        name:
+          type: string
+          example: AcmeCorp
+      required:
+      - name
+  securitySchemes:
+    cookie_session:
+      type: apiKey
+      in: cookie
+      name: _worders_session
+      description: Authenticated Devise session cookie (api.worders.net).
+    bearer_auth:
+      type: http
+      scheme: bearer
+      description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'

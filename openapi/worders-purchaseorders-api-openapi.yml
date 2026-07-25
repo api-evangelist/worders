@@ -1,0 +1,244 @@
+openapi: 3.0.1
+info:
+  title: Worders API V1 Customers PurchaseOrders API
+  version: v1
+  description: Worders API endpoints (freelance invoice verification, webhooks, ...).
+servers:
+- url: https://api.worders.net
+tags:
+- name: PurchaseOrders
+paths:
+  /V1/freelancers/{freelancer_id}/purchase_orders:
+    parameters:
+    - name: freelancer_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      summary: List purchase orders for a freelancer
+      tags:
+      - PurchaseOrders
+      description: List purchase orders attached to a freelancer over a period. By default `deleted` and `deprecated` POs are excluded.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      parameters:
+      - name: period_start
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: period_end
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: status
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+        description: Optional status filter, e.g. status[]=generated&status[]=paid
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: 'pagination: second page returns correct slice'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PurchaseOrderSummary'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '404':
+          description: freelancer not found
+  /V1/purchase_orders/{po_number}:
+    parameters:
+    - name: po_number
+      in: path
+      required: true
+      schema:
+        type: string
+      description: PO number, e.g. PO-2025-001234
+    get:
+      summary: PO detail with all its jobs
+      tags:
+      - PurchaseOrders
+      description: Returns the PO with its freelancer and all attached jobs (price, currency, language pair, order reference, delivery date). Used when an invoice cites a PO number.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      responses:
+        '200':
+          description: PO found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrderDetail'
+        '404':
+          description: PO not found
+        '401':
+          description: unauthenticated
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Same as id
+        plunet_id:
+          type: string
+          nullable: true
+        job_no:
+          type: string
+          nullable: true
+        short_job_type:
+          type: string
+          nullable: true
+          example: TRA
+        status:
+          type: string
+          example: approved
+        price:
+          type: number
+          format: float
+          nullable: true
+        currency:
+          type: string
+          nullable: true
+        language_pair:
+          type: string
+          nullable: true
+          example: en > fr
+        order_reference:
+          type: string
+          nullable: true
+        delivered_on:
+          type: string
+          format: date-time
+          nullable: true
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
+    PurchaseOrderDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Same as id
+        po_number:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: float
+        freelancer:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+    PurchaseOrderSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Same as id
+        po_number:
+          type: string
+          example: PO-2025-001234
+        currency:
+          type: string
+          example: EUR
+        status:
+          type: string
+          example: generated
+        created_at:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: float
+          example: 1250.0
+        jobs_count:
+          type: integer
+          example: 5
+        freelancer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+  securitySchemes:
+    cookie_session:
+      type: apiKey
+      in: cookie
+      name: _worders_session
+      description: Authenticated Devise session cookie (api.worders.net).
+    bearer_auth:
+      type: http
+      scheme: bearer
+      description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'

@@ -1,0 +1,470 @@
+openapi: 3.0.1
+info:
+  title: Worders API V1 Customers Orders API
+  version: v1
+  description: Worders API endpoints (freelance invoice verification, webhooks, ...).
+servers:
+- url: https://api.worders.net
+tags:
+- name: Orders
+paths:
+  /V1/orders:
+    get:
+      summary: List orders eligible for the weekly client budget export
+      tags:
+      - Orders
+      description: Returns orders with their items. Supports filtering by customer (Plunet id), completion state (all items approved), and incremental polling via updated_since.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      parameters:
+      - name: customer_plunet_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Filter to a single customer (matches Order.customer_id, which stores the customer Plunet id).
+      - name: all_items_approved
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: When true, keep only orders that have at least one item AND whose every item is in 'approved' status.
+      - name: updated_since
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 timestamp. Restricts to orders updated since this date.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: matching orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          description: unauthenticated
+    post:
+      summary: Create a Plunet order with items
+      tags:
+      - Orders
+      description: 'Create an Order + OrderItems in Plunet from Airtable-mapped data. Idempotent on `external_id`: the second POST returns 200 with the existing order.'
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: order created in Plunet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCreateResponse'
+        '200':
+          description: returns the existing order when external_id matches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCreateResponse'
+        '404':
+          description: unknown customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: missing order key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreateRequest'
+        required: true
+  /V1/orders/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Plunet order id (e.g. "O-100") or order_reference (e.g. "ORD-2025-789").
+    get:
+      summary: Show a single order
+      tags:
+      - Orders
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      responses:
+        '200':
+          description: lookup by plunet_id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: quote id should not resolve
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+          example: O-78901
+          description: Plunet order id
+        plunet_id:
+          type: string
+          nullable: true
+          description: Same as id
+        order_reference:
+          type: string
+          example: ORD-2025-789
+        quote_number:
+          type: string
+          nullable: true
+          example: Q-1446-01
+          description: Source quote's order_reference, if the order originated from a quote.
+        project_name:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+          example: completed
+        all_items_approved:
+          type: boolean
+          example: true
+        client:
+          $ref: '#/components/schemas/Customer'
+          nullable: true
+        contact_person:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+            email:
+              type: string
+              format: email
+        currency:
+          type: string
+          nullable: true
+          example: EUR
+          description: Internal currency (always EUR).
+        total_price:
+          type: number
+          format: float
+          nullable: true
+          example: 4117.92
+          description: Order total in internal currency (EUR).
+        client_ccy:
+          type: string
+          nullable: true
+          example: USD
+          description: Customer-facing currency (matches the PDF invoice/quote).
+        total_price_in_client_ccy:
+          type: number
+          format: float
+          nullable: true
+          example: 4500.0
+          description: Order total in the customer-facing currency.
+        due_date:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              nullable: true
+          required:
+          - code
+          - message
+      required:
+      - error
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
+    OrderCreateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+          example: O-78901
+          description: Plunet order id
+        plunet_id:
+          type: string
+          nullable: true
+          description: Same as id
+        created:
+          type: boolean
+          description: true when newly created, false when idempotent hit on existing external_id
+        order_reference:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+          example: in_preparation
+        external_id:
+          type: string
+          nullable: true
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                nullable: true
+                description: Plunet item id
+              language_source:
+                type: string
+                nullable: true
+              language_target:
+                type: string
+                nullable: true
+        urls:
+          type: object
+          properties:
+            worders_admin:
+              type: string
+              format: uri
+            plunet:
+              type: string
+              format: uri
+              nullable: true
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type: string
+          nullable: true
+          description: Same as id
+        language_source:
+          type: string
+          nullable: true
+          example: en-US
+        language_target:
+          type: string
+          nullable: true
+          example: fr-FR
+        quantity:
+          type: number
+          format: float
+          nullable: true
+          example: 1200
+        price:
+          type: number
+          format: float
+          nullable: true
+          example: 1372.64
+          description: Item price in internal currency (EUR).
+        currency:
+          type: string
+          nullable: true
+          example: EUR
+          description: Internal currency (always EUR).
+        client_price:
+          type: number
+          format: float
+          nullable: true
+          example: 1500.0
+          description: Item price in the customer-facing currency (matches the PDF).
+        client_currency:
+          type: string
+          nullable: true
+          example: USD
+          description: Customer-facing currency on the item.
+        status:
+          type: string
+          example: approved
+    OrderCreateRequest:
+      type: object
+      required:
+      - order
+      properties:
+        order:
+          type: object
+          required:
+          - customer
+          - project_manager
+          - items
+          properties:
+            external_id:
+              type: string
+              example: rec_AIRTABLE_RECORD_ID
+              description: Airtable record id, used for idempotence
+            customer:
+              type: object
+              description: Identify the customer by plunet_id, id (uuid) or name (one of)
+              properties:
+                plunet_id:
+                  type: integer
+                  example: 12345
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+            project_manager:
+              type: object
+              description: Identify the PM by email or id (uuid)
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: pm@worders.net
+                id:
+                  type: string
+                  format: uuid
+            contact_person:
+              type: object
+              description: Optional. Identify by plunet_id (Plunet customer_contact_id) or email
+              properties:
+                plunet_id:
+                  type: integer
+                  example: 67890
+                email:
+                  type: string
+                  format: email
+            project_name:
+              type: string
+              example: Adobe — Acrobat Q2 update
+            subject:
+              type: string
+              example: Translation of help articles
+            currency:
+              type: string
+              example: EUR
+            order_date:
+              type: string
+              format: date
+              nullable: true
+            delivery_deadline:
+              type: string
+              format: date-time
+              nullable: true
+            rate:
+              type: number
+              format: float
+              nullable: true
+              example: 0.1
+            project_manager_memo:
+              type: string
+              nullable: true
+            template_id:
+              type: integer
+              nullable: true
+              example: 42
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  language_source:
+                    type: string
+                    example: en-US
+                  language_target:
+                    type: string
+                    example: fr-FR
+                  quantity:
+                    type: number
+                    format: float
+                    example: 1200
+                  description:
+                    type: string
+                    nullable: true
+                  delivery_date:
+                    type: string
+                    format: date
+                    nullable: true
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+          example: 12345
+          description: Plunet customer id
+        name:
+          type: string
+          example: AcmeCorp
+      required:
+      - name
+  securitySchemes:
+    cookie_session:
+      type: apiKey
+      in: cookie
+      name: _worders_session
+      description: Authenticated Devise session cookie (api.worders.net).
+    bearer_auth:
+      type: http
+      scheme: bearer
+      description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'

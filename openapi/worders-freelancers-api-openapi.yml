@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: Worders API V1 Customers Freelancers API
+  version: v1
+  description: Worders API endpoints (freelance invoice verification, webhooks, ...).
+servers:
+- url: https://api.worders.net
+tags:
+- name: Freelancers
+paths:
+  /V1/freelancers:
+    get:
+      summary: Search freelancers by name
+      tags:
+      - Freelancers
+      description: Search freelancers by full or partial name. Used by the freelance invoice verification scenario to locate the user behind an invoice.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Full or partial name (matches full_name, first_name, last_name). Restricted to users with user_type = author.
+      responses:
+        '200':
+          description: matching freelancers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Freelancer'
+        '401':
+          description: unauthenticated
+components:
+  schemas:
+    Freelancer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Same as id
+        full_name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        user_type:
+          type: string
+          example: author
+      required:
+      - id
+      - full_name
+      - email
+      - user_type
+  securitySchemes:
+    cookie_session:
+      type: apiKey
+      in: cookie
+      name: _worders_session
+      description: Authenticated Devise session cookie (api.worders.net).
+    bearer_auth:
+      type: http
+      scheme: bearer
+      description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'

@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: Worders API V1 Customers Templates API
+  version: v1
+  description: Worders API endpoints (freelance invoice verification, webhooks, ...).
+servers:
+- url: https://api.worders.net
+tags:
+- name: Templates
+paths:
+  /V1/customers/{customer_id}/templates:
+    parameters:
+    - name: customer_id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Customer's Plunet id (matches the `id` field in /V1/customers responses).
+    get:
+      summary: List Plunet order templates available for a customer
+      tags:
+      - Templates
+      description: Returns Plunet `getTemplateList` results filtered by the customer's Plunet id. Used by the Adobe order-creation scenario to offer a template before POST /V1/orders.
+      security:
+      - cookie_session: []
+      - bearer_auth: []
+      responses:
+        '200':
+          description: templates list (scoped to customer)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PlunetTemplate'
+components:
+  schemas:
+    PlunetTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 42
+        name:
+          type: string
+          example: Adobe — Standard Translation
+        description:
+          type: string
+          nullable: true
+          example: Default template for Adobe orders
+  securitySchemes:
+    cookie_session:
+      type: apiKey
+      in: cookie
+      name: _worders_session
+      description: Authenticated Devise session cookie (api.worders.net).
+    bearer_auth:
+      type: http
+      scheme: bearer
+      description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'
