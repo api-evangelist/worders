@@ -1,9 +1,28 @@
 aid: worders
 name: Worders
-description: 'Worders is a company surfaced as a portfolio company of partech and added to the API Evangelist
-  network as a stub for enrichment. Sector: Applicative SaaS. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Worders is a culturalization and localization company (a Partech portfolio
+  company) that crafts translated, culturally-adapted content for global
+  brands with in-country linguists. Alongside the services business it runs a
+  Ruby on Rails translation-management platform (admin.worders.net) and
+  publishes the Worders API V1 at api.worders.net — an OpenAPI 3.0.1-documented
+  surface for freelance invoice verification and Plunet TMS automation
+  covering customers, freelancers, invoices, orders, purchase orders, quotes,
+  and order templates.
 url: https://raw.githubusercontent.com/api-evangelist/worders/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/67befd57da776c510ff3b66b/6830866136954deeba98bba4_worders_webclip.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,12 +30,106 @@ x-backed-by:
 x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Applicative Saas
-apis: []
+- Localization
+- Translation
+- Culturalization
+- Language Services
+- Invoicing
+apis:
+- aid: worders:worders-customers-api
+  name: Worders Customers API
+  description: The Customers API from Worders — 1 operation(s) for customers.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-customers-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-freelancers-api
+  name: Worders Freelancers API
+  description: The Freelancers API from Worders — 1 operation(s) for freelancers.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Freelancers
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-freelancers-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-invoices-api
+  name: Worders Invoices API
+  description: The Invoices API from Worders — 2 operation(s) for invoices.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-orders-api
+  name: Worders Orders API
+  description: The Orders API from Worders — 2 operation(s) for orders.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-orders-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-purchaseorders-api
+  name: Worders PurchaseOrders API
+  description: The PurchaseOrders API from Worders — 2 operation(s) for purchaseorders.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - PurchaseOrders
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-purchaseorders-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-quotes-api
+  name: Worders Quotes API
+  description: The Quotes API from Worders — 2 operation(s) for quotes.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-templates-api
+  name: Worders Templates API
+  description: The Templates API from Worders — 1 operation(s) for templates.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-templates-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +138,37 @@ maintainers:
 common:
 - type: Website
   url: https://worders.net/
+- type: Documentation
+  url: https://api.worders.net/api-docs/index.html
+- type: APIReference
+  url: https://api.worders.net/api-docs/index.html
+- type: Login
+  url: https://admin.worders.net/users/sign_in
+- type: LinkedIn
+  url: https://www.linkedin.com/company/worders/
+- type: Twitter
+  url: https://twitter.com/WordersNET
+- type: Authentication
+  url: authentication/worders-authentication.yml
+- type: DomainSecurity
+  url: security/worders-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/worders-agentic-access.yml
+- type: ErrorCatalog
+  url: errors/worders-problem-types.yml
+- type: Conventions
+  url: conventions/worders-conventions.yml
+- type: Lifecycle
+  url: lifecycle/worders-lifecycle.yml
+- type: Conformance
+  url: conformance/worders-conformance.yml
+- type: MCPServer
+  url: mcp/worders-mcp.yml
+- type: LLMsTxt
+  url: llms/worders-llms.txt
+- type: Overlay
+  url: overlays/worders-api-overlay.yaml
+- type: DataModel
+  url: data-model/worders-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml

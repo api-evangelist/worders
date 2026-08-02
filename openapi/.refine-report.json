@@ -1,0 +1,26 @@
+{
+  "provider": "worders",
+  "sources": [
+    "worders-customers-api-openapi.yml",
+    "worders-freelancers-api-openapi.yml",
+    "worders-invoices-api-openapi.yml",
+    "worders-orders-api-openapi.yml",
+    "worders-purchaseorders-api-openapi.yml",
+    "worders-quotes-api-openapi.yml",
+    "worders-templates-api-openapi.yml"
+  ],
+  "outputs": [
+    "worders-customers-api-openapi.yml",
+    "worders-freelancers-api-openapi.yml",
+    "worders-invoices-api-openapi.yml",
+    "worders-orders-api-openapi.yml",
+    "worders-purchaseorders-api-openapi.yml",
+    "worders-quotes-api-openapi.yml",
+    "worders-templates-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+notes: >-
+  Live probe of the /.well-known/ discovery surface on both Worders hosts.
+  Nothing is published: www.worders.net (Webflow) returns 404 for every path;
+  api.worders.net (Rails) 302-redirects unknown paths to the homepage. No raw
+  files saved because no document returned 200. Absence recorded as valid data.
+hosts:
+  - host: https://www.worders.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://api.worders.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 302
+        note: redirects to homepage (not present)
+      - path: /.well-known/openid-configuration
+        status: 302
+        note: redirects to homepage (not present)

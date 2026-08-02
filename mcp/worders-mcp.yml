@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/worders-api-openapi-original.yml
+notes: >-
+  No official hosted/remote MCP server was found for Worders. This is a
+  candidate tool list derived from the Worders API V1 OpenAPI operations.
+  The spec declares no operationIds, so source_operation references use
+  METHOD + path.
+server:
+  name: worders
+  transport: http
+tools:
+  - name: search_customers
+    description: Search customers by name
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/customers
+  - name: search_freelancers
+    description: Search freelancers by name
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/freelancers
+  - name: list_invoices
+    description: List invoices (filterable, paginated)
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/invoices
+  - name: get_invoice
+    description: Show a single invoice
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/invoices/{id}
+  - name: list_orders
+    description: List orders eligible for the weekly client budget export
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/orders
+  - name: create_order
+    description: Create a Plunet order with items
+    source_operation: openapi/worders-api-openapi-original.yml#POST /V1/orders
+  - name: get_order
+    description: Show a single order
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/orders/{id}
+  - name: list_freelancer_purchase_orders
+    description: List purchase orders for a freelancer
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/freelancers/{freelancer_id}/purchase_orders
+  - name: get_purchase_order
+    description: Purchase-order detail with all its jobs
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/purchase_orders/{po_number}
+  - name: list_quotes
+    description: List quotes
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/quotes
+  - name: create_quote
+    description: Create a Plunet quote with items
+    source_operation: openapi/worders-api-openapi-original.yml#POST /V1/quotes
+  - name: get_quote
+    description: Show a single quote
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/quotes/{id}
+  - name: list_customer_templates
+    description: List Plunet order templates available for a customer
+    source_operation: openapi/worders-api-openapi-original.yml#GET /V1/customers/{customer_id}/templates

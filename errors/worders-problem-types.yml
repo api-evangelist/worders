@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/worders-api-openapi-original.yml
+format: custom-envelope
+envelope:
+  description: All errors return a JSON object with a top-level `error` object.
+  shape:
+    error:
+      code: string (required)
+      message: string (required)
+      details: object (nullable)
+  schema: openapi/worders-api-openapi-original.yml#/components/schemas/ErrorResponse
+problems:
+  - status: 400
+    title: Bad request - missing required key
+    detail: Returned when the request body omits the required top-level key (`order` on POST /V1/orders, `quote` on POST /V1/quotes).
+    source_operations:
+      - POST /V1/orders
+      - POST /V1/quotes
+  - status: 401
+    title: Unauthenticated
+    detail: Returned when neither a valid `_worders_session` cookie nor a `Authorization Bearer wrd_live_...` service API key is presented.
+    source_operations:
+      - GET /V1/customers
+      - GET /V1/freelancers
+      - GET /V1/invoices
+      - GET /V1/orders
+      - GET /V1/quotes
+      - GET /V1/freelancers/{freelancer_id}/purchase_orders
+  - status: 404
+    title: Resource not found
+    detail: Returned for unknown invoice, order, quote, purchase order, customer, or template ids (including a quote id passed to the order endpoint).
+    source_operations:
+      - GET /V1/invoices/{id}
+      - POST /V1/orders
+      - GET /V1/orders/{id}
+      - GET /V1/purchase_orders/{po_number}
+      - GET /V1/quotes/{id}
+      - GET /V1/customers/{customer_id}/templates
+      - POST /V1/quotes
+notes: >-
+  Derived from the 4xx responses declared in the Worders API V1 OpenAPI
+  (https://api.worders.net/api-docs/v1/swagger.yaml). The API does not use
+  RFC 9457 application/problem+json; it uses a provider-specific
+  error envelope. No public error-code registry is published.

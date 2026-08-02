@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/worders-api-openapi-original.yml
+authentication:
+  style: bearer-api-key
+  detail: >-
+    Service API keys are issued from the admin UI and sent as
+    `Authorization: Bearer wrd_live_...`. Browser/admin traffic can instead
+    authenticate with the `_worders_session` Devise cookie. Write operations
+    (POST /V1/orders, POST /V1/quotes) accept bearer keys only.
+  artifact: authentication/worders-authentication.yml
+idempotency:
+  supported: false
+  detail: No idempotency-key header or replay-protection contract is documented in the spec.
+pagination:
+  style: page-offset
+  request_params: [page, per_page]
+  response_fields:
+    meta: [total, page, per_page]
+  schema: openapi/worders-api-openapi-original.yml#/components/schemas/PaginationMeta
+filtering:
+  detail: List endpoints filter via query params such as customer_plunet_id, status, updated_since, and name search params.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  header: X-Request-Id
+  detail: Responses carry an X-Request-Id header (observed on live responses from api.worders.net).
+versioning:
+  scheme: uri-path
+  current: V1
+  detail: Version is carried in the URL path (`/V1/...`); the OpenAPI info.version is `v1`.
+  artifact: lifecycle/worders-lifecycle.yml
+error_envelope:
+  shape: '{ "error": { "code", "message", "details" } }'
+  artifact: errors/worders-problem-types.yml
+rate_limiting:
+  documented: false
+  detail: No rate-limit headers or policy are documented in the spec or on the site.

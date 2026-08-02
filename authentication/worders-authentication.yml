@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/worders-api-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - cookie
+schemes:
+- name: cookie_session
+  type: apiKey
+  in: cookie
+  parameter: _worders_session
+  description: Authenticated Devise session cookie (api.worders.net).
+  sources:
+  - openapi/worders-api-openapi-original.yml
+- name: bearer_auth
+  type: http
+  scheme: bearer
+  description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'
+  sources:
+  - openapi/worders-api-openapi-original.yml

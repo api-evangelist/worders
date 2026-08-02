@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: generated
+notes: >-
+  Generated Agent Skills grounded in the harvested Worders API V1 OpenAPI
+  (which declares no operationIds, so operations are referenced by
+  METHOD + path). No provider-published skills or AGENTS.md were found.
+skills:
+  - file: worders-verify-freelance-invoice.md
+    name: Verify a freelancer's invoice against their purchase orders
+    api: openapi/worders-api-openapi-original.yml
+    operations:
+      - GET /V1/freelancers
+      - GET /V1/freelancers/{freelancer_id}/purchase_orders
+      - GET /V1/purchase_orders/{po_number}
+      - GET /V1/invoices
+      - GET /V1/invoices/{id}
+  - file: worders-create-plunet-order.md
+    name: Create a Plunet order from a customer template
+    api: openapi/worders-api-openapi-original.yml
+    operations:
+      - GET /V1/customers
+      - GET /V1/customers/{customer_id}/templates
+      - POST /V1/orders
+      - GET /V1/orders/{id}
+  - file: worders-create-plunet-quote.md
+    name: Create and track a Plunet quote
+    api: openapi/worders-api-openapi-original.yml
+    operations:
+      - GET /V1/customers
+      - POST /V1/quotes
+      - GET /V1/quotes
+      - GET /V1/quotes/{id}

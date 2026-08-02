@@ -1,0 +1,23 @@
+# Worders
+
+> Worders is a Paris-area culturalization and localization company (a Partech portfolio company) that pairs brands with in-country linguists. Its platform (admin.worders.net, api.worders.net) runs on Ruby on Rails and exposes the Worders API V1 for freelance invoice verification and Plunet TMS order/quote automation, documented with an OpenAPI 3.0.1 spec served through Swagger UI.
+
+The API authenticates with service API keys (`Authorization: Bearer wrd_live_...`) issued from the admin UI, or a Devise session cookie for browser traffic. List endpoints paginate with page/per_page and return a meta block (total/page/per_page). Errors use a `{"error": {"code", "message", "details"}}` envelope.
+
+## APIs
+
+- [Worders API V1 Swagger UI](https://api.worders.net/api-docs/index.html): interactive reference for the 13 endpoints (customers, freelancers, invoices, orders, purchase orders, quotes, Plunet templates)
+- [OpenAPI 3.0.1 spec](https://api.worders.net/api-docs/v1/swagger.yaml): the machine-readable contract, base URL https://api.worders.net
+
+## Docs
+
+- [Worders website](https://www.worders.net/): culturalization services, expertise, and contact
+- [Culturalization](https://www.worders.net/culturalization): what Worders means by culturalization
+- [Areas of expertise](https://www.worders.net/expertise): industries and content types covered
+- [Contact](https://www.worders.net/contact): reach the team
+- [Admin sign-in](https://admin.worders.net/users/sign_in): platform login (where API keys are issued)
+
+## Specs
+
+- [openapi/worders-api-openapi-original.yml](https://raw.githubusercontent.com/api-evangelist/worders/refs/heads/main/openapi/worders-api-openapi-original.yml): harvested copy of the Worders API V1 OpenAPI
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/worders/refs/heads/main/apis.yml): APIs.json index for this provider

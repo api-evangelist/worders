@@ -1,0 +1,78 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/worders-api-openapi-original.yml
+entities:
+  - Freelancer
+  - PurchaseOrderSummary
+  - PurchaseOrderDetail
+  - Job
+  - Customer
+  - Order
+  - OrderItem
+  - Quote
+  - QuoteItem
+  - QuoteCustomer
+  - PriceLineEntry
+  - Invoice
+  - InvoiceLine
+  - PlunetTemplate
+relationships:
+  - from: PurchaseOrderDetail
+    to: Job
+    kind: has_many
+    via: jobs
+  - from: PurchaseOrderSummary
+    to: Freelancer
+    kind: belongs_to
+    via: freelancer
+  - from: PurchaseOrderDetail
+    to: Freelancer
+    kind: belongs_to
+    via: freelancer
+  - from: Freelancer
+    to: PurchaseOrderSummary
+    kind: has_many
+    via: /V1/freelancers/{freelancer_id}/purchase_orders
+  - from: Order
+    to: Customer
+    kind: belongs_to
+    via: client
+  - from: Order
+    to: OrderItem
+    kind: has_many
+    via: items
+  - from: Quote
+    to: QuoteCustomer
+    kind: belongs_to
+    via: customer
+  - from: Quote
+    to: QuoteItem
+    kind: has_many
+    via: items
+  - from: QuoteItem
+    to: PriceLineEntry
+    kind: has_many
+    via: price_line
+  - from: Invoice
+    to: QuoteCustomer
+    kind: belongs_to
+    via: customer
+  - from: Invoice
+    to: InvoiceLine
+    kind: has_many
+    via: items
+  - from: InvoiceLine
+    to: QuoteItem
+    kind: belongs_to
+    via: order_item
+  - from: Customer
+    to: PlunetTemplate
+    kind: has_many
+    via: /V1/customers/{customer_id}/templates
+id_conventions:
+  - Entities carry both a local `id` and Plunet cross-reference ids (`plunet_id`, `internal_id`).
+  - Purchase orders are addressed by `po_number`; invoices by `invoice_number` / `payment_request_id`.
+notes: >-
+  Derived from components.schemas $ref links and the resource paths of the
+  Worders API V1 OpenAPI. The platform brokers between Worders freelancers /
+  customers and the Plunet TMS (orders, quotes, templates carry plunet_id).

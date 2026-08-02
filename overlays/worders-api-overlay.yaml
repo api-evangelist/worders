@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Worders API V1
+  version: 1.0.0
+  x-generated: '2026-07-21'
+  x-method: generated
+extends: openapi/worders-api-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: worders
+      x-apievangelist-source: https://api.worders.net/api-docs/v1/swagger.yaml
+      contact:
+        url: https://www.worders.net/contact
+  - target: $.paths['/V1/customers'].get
+    update:
+      operationId: searchCustomers
+  - target: $.paths['/V1/freelancers'].get
+    update:
+      operationId: searchFreelancers
+  - target: $.paths['/V1/invoices'].get
+    update:
+      operationId: listInvoices
+  - target: $.paths['/V1/invoices/{id}'].get
+    update:
+      operationId: getInvoice
+  - target: $.paths['/V1/orders'].get
+    update:
+      operationId: listOrders
+  - target: $.paths['/V1/orders'].post
+    update:
+      operationId: createOrder
+  - target: $.paths['/V1/orders/{id}'].get
+    update:
+      operationId: getOrder
+  - target: $.paths['/V1/freelancers/{freelancer_id}/purchase_orders'].get
+    update:
+      operationId: listFreelancerPurchaseOrders
+  - target: $.paths['/V1/purchase_orders/{po_number}'].get
+    update:
+      operationId: getPurchaseOrder
+  - target: $.paths['/V1/quotes'].get
+    update:
+      operationId: listQuotes
+  - target: $.paths['/V1/quotes'].post
+    update:
+      operationId: createQuote
+  - target: $.paths['/V1/quotes/{id}'].get
+    update:
+      operationId: getQuote
+  - target: $.paths['/V1/customers/{customer_id}/templates'].get
+    update:
+      operationId: listCustomerTemplates

@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/worders-api-openapi-original.yml
+versioning:
+  scheme: uri-path
+  current: V1
+  detail: All endpoints live under /V1/; info.version is v1.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: No deprecation policy or RFC 8594 Sunset header support is published.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >-
+  Derived from the Worders API V1 OpenAPI. status.worders.net returns 404 and
+  no status page, SLA, or changelog is published on worders.net or
+  api.worders.net as of the probe date.
