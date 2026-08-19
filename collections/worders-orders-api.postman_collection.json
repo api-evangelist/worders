@@ -1,0 +1,668 @@
+{
+  "item": [
+    {
+      "id": "cd567c14-39ca-4a0d-ae7e-ea5e614d42b6",
+      "name": "Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b9780efa-eecf-4d22-9f6b-04c99233eb63",
+          "name": "List orders eligible for the weekly client budget export",
+          "request": {
+            "name": "List orders eligible for the weekly client budget export",
+            "description": {
+              "content": "Returns orders with their items. Supports filtering by customer (Plunet id), completion state (all items approved), and incremental polling via updated_since.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "customer_plunet_id",
+                  "value": "<integer>",
+                  "description": "Filter to a single customer (matches Order.customer_id, which stores the customer Plunet id)."
+                },
+                {
+                  "disabled": false,
+                  "key": "all_items_approved",
+                  "value": "<boolean>",
+                  "description": "When true, keep only orders that have at least one item AND whose every item is in 'approved' status."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_since",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 timestamp. Restricts to orders updated since this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "50"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8147705e-f474-45f6-a7d0-e85238fa37d0",
+              "name": "matching orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer_plunet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "all_items_approved",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"O-78901\",\n      \"plunet_id\": \"string\",\n      \"order_reference\": \"ORD-2025-789\",\n      \"quote_number\": \"Q-1446-01\",\n      \"project_name\": \"string\",\n      \"status\": \"completed\",\n      \"all_items_approved\": true,\n      \"client\": {\n        \"name\": \"AcmeCorp\",\n        \"id\": 12345\n      },\n      \"contact_person\": {\n        \"id\": \"9235ffcf-0404-0c7d-46c7-1ee0468ae6ca\",\n        \"full_name\": \"string\",\n        \"email\": \"vNpoWfxnGjn@RRMsKVkXqkDHFAGcOInemwotgumhTNp.id\"\n      },\n      \"currency\": \"EUR\",\n      \"total_price\": 4117.92,\n      \"client_ccy\": \"USD\",\n      \"total_price_in_client_ccy\": 4500,\n      \"due_date\": \"1993-10-20T10:15:12.402Z\",\n      \"created_at\": \"1958-12-11T15:41:47.359Z\",\n      \"updated_at\": \"1967-04-30T10:38:10.154Z\",\n      \"items\": [\n        {\n          \"id\": \"I-44556\",\n          \"plunet_id\": \"string\",\n          \"language_source\": \"en-US\",\n          \"language_target\": \"fr-FR\",\n          \"quantity\": 1200,\n          \"price\": 1372.64,\n          \"currency\": \"EUR\",\n          \"client_price\": 1500,\n          \"client_currency\": \"USD\",\n          \"status\": \"approved\"\n        },\n        {\n          \"id\": \"I-44556\",\n          \"plunet_id\": \"string\",\n          \"language_source\": \"en-US\",\n          \"language_target\": \"fr-FR\",\n          \"quantity\": 1200,\n          \"price\": 1372.64,\n          \"currency\": \"EUR\",\n          \"client_price\": 1500,\n          \"client_currency\": \"USD\",\n          \"status\": \"approved\"\n        }\n      ]\n    },\n    {\n      \"id\": \"O-78901\",\n      \"plunet_id\": \"string\",\n      \"order_reference\": \"ORD-2025-789\",\n      \"quote_number\": \"Q-1446-01\",\n      \"project_name\": \"string\",\n      \"status\": \"completed\",\n      \"all_items_approved\": true,\n      \"client\": {\n        \"name\": \"AcmeCorp\",\n        \"id\": 12345\n      },\n      \"contact_person\": {\n        \"id\": \"e5ffd29f-1d1e-6c53-6d70-5d5eda024aab\",\n        \"full_name\": \"string\",\n        \"email\": \"3U5Tx8@gAmPlBVguMKiVyaheuyzeBzCtAFy.uz\"\n      },\n      \"currency\": \"EUR\",\n      \"total_price\": 4117.92,\n      \"client_ccy\": \"USD\",\n      \"total_price_in_client_ccy\": 4500,\n      \"due_date\": \"1990-01-30T22:49:32.794Z\",\n      \"created_at\": \"2012-02-06T18:42:30.643Z\",\n      \"updated_at\": \"2014-03-11T15:21:00.979Z\",\n      \"items\": [\n        {\n          \"id\": \"I-44556\",\n          \"plunet_id\": \"string\",\n          \"language_source\": \"en-US\",\n          \"language_target\": \"fr-FR\",\n          \"quantity\": 1200,\n          \"price\": 1372.64,\n          \"currency\": \"EUR\",\n          \"client_price\": 1500,\n          \"client_currency\": \"USD\",\n          \"status\": \"approved\"\n        },\n        {\n          \"id\": \"I-44556\",\n          \"plunet_id\": \"string\",\n          \"language_source\": \"en-US\",\n          \"language_target\": \"fr-FR\",\n          \"quantity\": 1200,\n          \"price\": 1372.64,\n          \"currency\": \"EUR\",\n          \"client_price\": 1500,\n          \"client_currency\": \"USD\",\n          \"status\": \"approved\"\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"total\": 42,\n    \"page\": 1,\n    \"per_page\": 50\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c61f5ccc-fcb3-4faa-ab9a-64faa2bee857",
+              "name": "unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer_plunet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "all_items_approved",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e554a3b-9d1e-4b49-ab01-42e42cbb6fff",
+          "name": "Create a Plunet order with items",
+          "request": {
+            "name": "Create a Plunet order with items",
+            "description": {
+              "content": "Create an Order + OrderItems in Plunet from Airtable-mapped data. Idempotent on `external_id`: the second POST returns 200 with the existing order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order\": {\n    \"customer\": {\n      \"plunet_id\": \"<integer>\",\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\"\n    },\n    \"project_manager\": {\n      \"email\": \"<email>\",\n      \"id\": \"<uuid>\"\n    },\n    \"items\": [\n      {\n        \"language_source\": \"<string>\",\n        \"language_target\": \"<string>\",\n        \"quantity\": \"<float>\",\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      },\n      {\n        \"language_source\": \"<string>\",\n        \"language_target\": \"<string>\",\n        \"quantity\": \"<float>\",\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      }\n    ],\n    \"external_id\": \"<string>\",\n    \"contact_person\": {\n      \"plunet_id\": \"<integer>\",\n      \"email\": \"<email>\"\n    },\n    \"project_name\": \"<string>\",\n    \"subject\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"order_date\": \"<date>\",\n    \"delivery_deadline\": \"<dateTime>\",\n    \"rate\": \"<float>\",\n    \"project_manager_memo\": \"<string>\",\n    \"template_id\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e5b8783-0b47-4f05-9e6b-8168b5fc881a",
+              "name": "returns the existing order when external_id matches",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order\": {\n    \"customer\": {\n      \"plunet_id\": 12345,\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\"\n    },\n    \"project_manager\": {\n      \"email\": \"pm@worders.net\",\n      \"id\": \"<uuid>\"\n    },\n    \"items\": [\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      },\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      }\n    ],\n    \"external_id\": \"rec_AIRTABLE_RECORD_ID\",\n    \"contact_person\": {\n      \"plunet_id\": 67890,\n      \"email\": \"<email>\"\n    },\n    \"project_name\": \"Adobe — Acrobat Q2 update\",\n    \"subject\": \"Translation of help articles\",\n    \"currency\": \"EUR\",\n    \"order_date\": \"<date>\",\n    \"delivery_deadline\": \"<dateTime>\",\n    \"rate\": 0.1,\n    \"project_manager_memo\": \"<string>\",\n    \"template_id\": 42\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"O-78901\",\n  \"plunet_id\": \"string\",\n  \"created\": true,\n  \"order_reference\": \"string\",\n  \"status\": \"in_preparation\",\n  \"external_id\": \"string\",\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"language_source\": \"string\",\n      \"language_target\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"language_source\": \"string\",\n      \"language_target\": \"string\"\n    }\n  ],\n  \"urls\": {\n    \"worders_admin\": \"http://zodFaqUX.tgCLjljxGr-iC1dTa4Odkd8BsmVHDU5ZyoKDZLlfmq+d\",\n    \"plunet\": \"http://iCaCuvkRN.ncAsFViR1HUz3nYVSu+L-Arco2x98K0wTUfP8UZpT\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d986264-e239-4e23-9db1-5e1a02f6d447",
+              "name": "order created in Plunet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order\": {\n    \"customer\": {\n      \"plunet_id\": 12345,\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\"\n    },\n    \"project_manager\": {\n      \"email\": \"pm@worders.net\",\n      \"id\": \"<uuid>\"\n    },\n    \"items\": [\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      },\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      }\n    ],\n    \"external_id\": \"rec_AIRTABLE_RECORD_ID\",\n    \"contact_person\": {\n      \"plunet_id\": 67890,\n      \"email\": \"<email>\"\n    },\n    \"project_name\": \"Adobe — Acrobat Q2 update\",\n    \"subject\": \"Translation of help articles\",\n    \"currency\": \"EUR\",\n    \"order_date\": \"<date>\",\n    \"delivery_deadline\": \"<dateTime>\",\n    \"rate\": 0.1,\n    \"project_manager_memo\": \"<string>\",\n    \"template_id\": 42\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"O-78901\",\n  \"plunet_id\": \"string\",\n  \"created\": true,\n  \"order_reference\": \"string\",\n  \"status\": \"in_preparation\",\n  \"external_id\": \"string\",\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"language_source\": \"string\",\n      \"language_target\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"language_source\": \"string\",\n      \"language_target\": \"string\"\n    }\n  ],\n  \"urls\": {\n    \"worders_admin\": \"http://IibjebDYkzjXN.qynvy\",\n    \"plunet\": \"http://fwWDCOPKDzTyfpcZakmlJ.zxuRpyi1dLMphSdmCrvArOG2ukdq.Bc9p-4ImIgpOLjxoRn\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50b332e5-b300-46bf-b56b-aa9995c6dca9",
+              "name": "missing order key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order\": {\n    \"customer\": {\n      \"plunet_id\": 12345,\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\"\n    },\n    \"project_manager\": {\n      \"email\": \"pm@worders.net\",\n      \"id\": \"<uuid>\"\n    },\n    \"items\": [\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      },\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      }\n    ],\n    \"external_id\": \"rec_AIRTABLE_RECORD_ID\",\n    \"contact_person\": {\n      \"plunet_id\": 67890,\n      \"email\": \"<email>\"\n    },\n    \"project_name\": \"Adobe — Acrobat Q2 update\",\n    \"subject\": \"Translation of help articles\",\n    \"currency\": \"EUR\",\n    \"order_date\": \"<date>\",\n    \"delivery_deadline\": \"<dateTime>\",\n    \"rate\": 0.1,\n    \"project_manager_memo\": \"<string>\",\n    \"template_id\": 42\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "566b32b8-8125-4676-8028-ff33aa1a920f",
+              "name": "unknown customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order\": {\n    \"customer\": {\n      \"plunet_id\": 12345,\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\"\n    },\n    \"project_manager\": {\n      \"email\": \"pm@worders.net\",\n      \"id\": \"<uuid>\"\n    },\n    \"items\": [\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      },\n      {\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"quantity\": 1200,\n        \"description\": \"<string>\",\n        \"delivery_date\": \"<date>\"\n      }\n    ],\n    \"external_id\": \"rec_AIRTABLE_RECORD_ID\",\n    \"contact_person\": {\n      \"plunet_id\": 67890,\n      \"email\": \"<email>\"\n    },\n    \"project_name\": \"Adobe — Acrobat Q2 update\",\n    \"subject\": \"Translation of help articles\",\n    \"currency\": \"EUR\",\n    \"order_date\": \"<date>\",\n    \"delivery_deadline\": \"<dateTime>\",\n    \"rate\": 0.1,\n    \"project_manager_memo\": \"<string>\",\n    \"template_id\": 42\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3df1923-60f7-4b4d-b3aa-cd07621e5279",
+          "name": "Show a single order",
+          "request": {
+            "name": "Show a single order",
+            "description": {},
+            "url": {
+              "path": [
+                "V1",
+                "orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Plunet order id (e.g. \"O-100\") or order_reference (e.g. \"ORD-2025-789\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9dcd4fa3-90da-47ee-b787-dd77d04fb62b",
+              "name": "lookup by plunet_id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Plunet order id (e.g. \"O-100\") or order_reference (e.g. \"ORD-2025-789\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"O-78901\",\n  \"plunet_id\": \"string\",\n  \"order_reference\": \"ORD-2025-789\",\n  \"quote_number\": \"Q-1446-01\",\n  \"project_name\": \"string\",\n  \"status\": \"completed\",\n  \"all_items_approved\": true,\n  \"client\": {\n    \"name\": \"AcmeCorp\",\n    \"id\": 12345\n  },\n  \"contact_person\": {\n    \"id\": \"46240eb4-218a-d485-3d49-56f36dae511a\",\n    \"full_name\": \"string\",\n    \"email\": \"LMzITkcIZ1@vzfvCcsWZGbBubwQRcHJyjNqago.rzj\"\n  },\n  \"currency\": \"EUR\",\n  \"total_price\": 4117.92,\n  \"client_ccy\": \"USD\",\n  \"total_price_in_client_ccy\": 4500,\n  \"due_date\": \"1984-02-07T09:08:42.372Z\",\n  \"created_at\": \"2017-02-15T01:13:07.391Z\",\n  \"updated_at\": \"2000-09-02T20:15:32.084Z\",\n  \"items\": [\n    {\n      \"id\": \"I-44556\",\n      \"plunet_id\": \"string\",\n      \"language_source\": \"en-US\",\n      \"language_target\": \"fr-FR\",\n      \"quantity\": 1200,\n      \"price\": 1372.64,\n      \"currency\": \"EUR\",\n      \"client_price\": 1500,\n      \"client_currency\": \"USD\",\n      \"status\": \"approved\"\n    },\n    {\n      \"id\": \"I-44556\",\n      \"plunet_id\": \"string\",\n      \"language_source\": \"en-US\",\n      \"language_target\": \"fr-FR\",\n      \"quantity\": 1200,\n      \"price\": 1372.64,\n      \"currency\": \"EUR\",\n      \"client_price\": 1500,\n      \"client_currency\": \"USD\",\n      \"status\": \"approved\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b2eeeec-3b84-4307-8bab-5e65a3e33de7",
+              "name": "quote id should not resolve",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Plunet order id (e.g. \"O-100\") or order_reference (e.g. \"ORD-2025-789\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.worders.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c00a398c-8dbe-4db4-a766-0944898ed78d",
+    "name": "Worders API V1 Customers Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Worders API endpoints (freelance invoice verification, webhooks, ...).",
+      "type": "text/plain"
+    }
+  }
+}

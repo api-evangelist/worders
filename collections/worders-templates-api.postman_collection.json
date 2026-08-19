@@ -1,0 +1,148 @@
+{
+  "item": [
+    {
+      "id": "39c713ae-9fe3-4bb0-b4c0-cc5db15fa7c6",
+      "name": "Templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89c028fe-aeff-4aaa-9959-00db9fa4241d",
+          "name": "List Plunet order templates available for a customer",
+          "request": {
+            "name": "List Plunet order templates available for a customer",
+            "description": {
+              "content": "Returns Plunet `getTemplateList` results filtered by the customer's Plunet id. Used by the Adobe order-creation scenario to offer a template before POST /V1/orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "customers",
+                ":customer_id",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "customer_id",
+                  "description": "(Required) Customer's Plunet id (matches the `id` field in /V1/customers responses)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d8fa9a84-58b6-43ec-adaa-0e41c9936cea",
+              "name": "templates list (scoped to customer)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "customers",
+                    ":customer_id",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "customer_id",
+                      "description": "(Required) Customer's Plunet id (matches the `id` field in /V1/customers responses)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 42,\n      \"name\": \"Adobe — Standard Translation\",\n      \"description\": \"Default template for Adobe orders\"\n    },\n    {\n      \"id\": 42,\n      \"name\": \"Adobe — Standard Translation\",\n      \"description\": \"Default template for Adobe orders\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.worders.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ce42cc4a-62c2-4131-b829-f715ec8e0f13",
+    "name": "Worders API V1 Customers Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Worders API endpoints (freelance invoice verification, webhooks, ...).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,493 @@
+{
+  "item": [
+    {
+      "id": "bc6f2996-2da6-4480-a5c1-52aeeab7a47b",
+      "name": "PurchaseOrders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b2be6a23-85c3-4eb1-b4d4-dc5280a763aa",
+          "name": "List purchase orders for a freelancer",
+          "request": {
+            "name": "List purchase orders for a freelancer",
+            "description": {
+              "content": "List purchase orders attached to a freelancer over a period. By default `deleted` and `deprecated` POs are excluded.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "freelancers",
+                ":freelancer_id",
+                "purchase_orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period_start",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period_end",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Optional status filter, e.g. status[]=generated&status[]=paid"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Optional status filter, e.g. status[]=generated&status[]=paid"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "50"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "freelancer_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4d1e792-055c-4d34-9839-44ea93479ede",
+              "name": "pagination: second page returns correct slice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "freelancers",
+                    ":freelancer_id",
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period_start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period_end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "freelancer_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"b97dc3c4-b29e-ca8b-8f6e-fd94e8462504\",\n      \"internal_id\": \"91e1f263-f226-98df-c0af-d9f4eb003c7f\",\n      \"po_number\": \"PO-2025-001234\",\n      \"currency\": \"EUR\",\n      \"status\": \"generated\",\n      \"created_at\": \"2019-04-29T02:51:57.078Z\",\n      \"total_amount\": 1250,\n      \"jobs_count\": 5,\n      \"freelancer\": {\n        \"id\": \"5ae3525a-afaf-916a-a337-186530d620c3\",\n        \"full_name\": \"string\"\n      }\n    },\n    {\n      \"id\": \"8c8ced64-9922-c45b-e0a1-9a8ec774032f\",\n      \"internal_id\": \"b33ec79f-a02c-ac32-8122-862aac376fb3\",\n      \"po_number\": \"PO-2025-001234\",\n      \"currency\": \"EUR\",\n      \"status\": \"generated\",\n      \"created_at\": \"2016-11-22T05:00:37.882Z\",\n      \"total_amount\": 1250,\n      \"jobs_count\": 5,\n      \"freelancer\": {\n        \"id\": \"6f6a6110-7844-76a4-dbee-22a8d2b38350\",\n        \"full_name\": \"string\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"total\": 42,\n    \"page\": 1,\n    \"per_page\": 50\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c9596b8-f17b-4b7c-beed-620568265a5e",
+              "name": "freelancer not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "freelancers",
+                    ":freelancer_id",
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period_start",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "period_end",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "freelancer_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "288315f4-da4e-4b21-93f9-488ea7ca78a1",
+          "name": "PO detail with all its jobs",
+          "request": {
+            "name": "PO detail with all its jobs",
+            "description": {
+              "content": "Returns the PO with its freelancer and all attached jobs (price, currency, language pair, order reference, delivery date). Used when an invoice cites a PO number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "purchase_orders",
+                ":po_number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "po_number",
+                  "description": "(Required) PO number, e.g. PO-2025-001234"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aed2a6c2-5b0a-4ce8-8397-129c6a73cc22",
+              "name": "PO found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "purchase_orders",
+                    ":po_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "po_number",
+                      "description": "(Required) PO number, e.g. PO-2025-001234"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"62c5157a-689f-141d-8eb8-1d4fc9dc9712\",\n  \"internal_id\": \"723fcabf-4503-cb34-583e-97cb12d6763e\",\n  \"po_number\": \"string\",\n  \"currency\": \"string\",\n  \"status\": \"string\",\n  \"created_at\": \"2004-03-06T08:27:06.144Z\",\n  \"total_amount\": 634.5875608406715,\n  \"freelancer\": {\n    \"id\": \"d1d29a67-8be2-e6f8-f1b6-7f6a3d1e0a10\",\n    \"full_name\": \"string\"\n  },\n  \"jobs\": [\n    {\n      \"id\": \"e9f3873a-77c5-cccd-0496-fbaa25333e85\",\n      \"internal_id\": \"13af2d39-56fc-58e1-b432-fcac46aa5ba5\",\n      \"plunet_id\": \"string\",\n      \"job_no\": \"string\",\n      \"short_job_type\": \"TRA\",\n      \"status\": \"approved\",\n      \"price\": 1250.5771835392477,\n      \"currency\": \"string\",\n      \"language_pair\": \"en > fr\",\n      \"order_reference\": \"string\",\n      \"delivered_on\": \"1977-02-11T21:07:35.103Z\"\n    },\n    {\n      \"id\": \"7cd83568-636c-4e4c-f880-b9bf431bfa18\",\n      \"internal_id\": \"548c794b-4efe-0059-eac8-a549f8a65480\",\n      \"plunet_id\": \"string\",\n      \"job_no\": \"string\",\n      \"short_job_type\": \"TRA\",\n      \"status\": \"approved\",\n      \"price\": 2133.383648860687,\n      \"currency\": \"string\",\n      \"language_pair\": \"en > fr\",\n      \"order_reference\": \"string\",\n      \"delivered_on\": \"1975-05-01T15:12:12.574Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d98ba072-52ad-4a42-8aea-d62707281d24",
+              "name": "unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "purchase_orders",
+                    ":po_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "po_number",
+                      "description": "(Required) PO number, e.g. PO-2025-001234"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "00a98c65-4fc9-4ff5-a25c-5ec7af4837cd",
+              "name": "PO not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "purchase_orders",
+                    ":po_number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "po_number",
+                      "description": "(Required) PO number, e.g. PO-2025-001234"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.worders.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8df987d1-1046-4540-9d21-bf28ba827015",
+    "name": "Worders API V1 Customers PurchaseOrders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Worders API endpoints (freelance invoice verification, webhooks, ...).",
+      "type": "text/plain"
+    }
+  }
+}

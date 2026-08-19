@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers Orders API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List orders eligible for the weekly client budget export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/orders",
+            "params": [
+              {
+                "name": "customer_plunet_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a single customer (matches Order.customer_id, which stores the customer Plunet id)."
+              },
+              {
+                "name": "all_items_approved",
+                "value": "",
+                "type": "query",
+                "description": "When true, keep only orders that have at least one item AND whose every item is in 'approved' status."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 timestamp. Restricts to orders updated since this date."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns orders with their items. Supports filtering by customer (Plunet id), completion state (all items approved), and incremental polling via updated_since."
+        },
+        {
+          "info": {
+            "name": "Create a Plunet order with items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.worders.net/V1/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an Order + OrderItems in Plunet from Airtable-mapped data. Idempotent on `external_id`: the second POST returns 200 with the existing order."
+        },
+        {
+          "info": {
+            "name": "Show a single order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Plunet order id (e.g. \"O-100\") or order_reference (e.g. \"ORD-2025-789\")."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Show a single order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

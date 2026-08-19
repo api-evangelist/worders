@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "aedcc219-1a09-4e5c-b90a-6af94fb7ca5f",
+      "name": "Freelancers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7bd40fc3-3961-4c09-b87c-4f97cfe91670",
+          "name": "Search freelancers by name",
+          "request": {
+            "name": "Search freelancers by name",
+            "description": {
+              "content": "Search freelancers by full or partial name. Used by the freelance invoice verification scenario to locate the user behind an invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "freelancers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Full or partial name (matches full_name, first_name, last_name). Restricted to users with user_type = author."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e35b3bb8-ed2a-4aaf-b343-67ebeb13a587",
+              "name": "matching freelancers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "freelancers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"dd832997-bdfa-7e47-adaa-c26d8b4ad56d\",\n      \"full_name\": \"string\",\n      \"email\": \"wCfuS81au@VLCwjJaKhJvsjBFwHIUjDiDjLnNkmhSu.krly\",\n      \"user_type\": \"author\",\n      \"internal_id\": \"e933f186-f233-2093-52bc-26f3051029ea\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    {\n      \"id\": \"e28661c2-f571-51f2-ea96-d2904949a5a1\",\n      \"full_name\": \"string\",\n      \"email\": \"GpIFULkWCLU@dkENaRLcdbEhkRbwkAjdrCy.ne\",\n      \"user_type\": \"author\",\n      \"internal_id\": \"7156ee80-51ea-7e53-a518-2f3e5e5a4a34\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6109c641-94d3-4737-bad7-f8b8a7b9c948",
+              "name": "unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "freelancers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.worders.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "864e518d-16db-44ef-aab3-8030692a1e89",
+    "name": "Worders API V1 Customers Freelancers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Worders API endpoints (freelance invoice verification, webhooks, ...).",
+      "type": "text/plain"
+    }
+  }
+}

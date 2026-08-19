@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers Freelancers API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Freelancers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search freelancers by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/freelancers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Full or partial name (matches full_name, first_name, last_name). Restricted to users with user_type = author."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Search freelancers by full or partial name. Used by the freelance invoice verification scenario to locate the user behind an invoice."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,400 @@
+{
+  "item": [
+    {
+      "id": "18aeb991-ef9b-49da-bb00-d223198c9a30",
+      "name": "Invoices",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26080f5f-51f9-4814-a36c-9a63ff6aa713",
+          "name": "List invoices",
+          "request": {
+            "name": "List invoices",
+            "description": {
+              "content": "Returns invoices mirroring the invoice PDF. Items are flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "V1",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "customer_plunet_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_since",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "50"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f085190e-ada4-48c2-8d4b-1c71287f3253",
+              "name": "matching invoices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer_plunet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"invoice_number\": \"Worders-Invoice2847\",\n      \"created_at\": \"1972-01-11T10:35:02.227Z\",\n      \"payment_due_date\": \"2013-11-24\",\n      \"payment_date\": \"1985-03-14\",\n      \"description\": \"Collective invoice - May 2026\",\n      \"po_number\": \"string\",\n      \"client_ccy\": \"USD\",\n      \"status\": \"outstanding\",\n      \"totals\": {\n        \"net\": 5778,\n        \"outgoing\": 5778,\n        \"paid\": 0\n      },\n      \"customer\": {\n        \"plunet_id\": 12345,\n        \"name\": \"EBSCO\",\n        \"address\": \"EBSCO\\n10 Estes Street\\n01938 Ipswich\\nUnited States\"\n      },\n      \"payment_request_id\": \"cbcb7d9f-34e2-4480-aaac-4e227093baa1\",\n      \"items\": [\n        {\n          \"requester\": \"Amber Russell\",\n          \"order_reference\": \"O-9703\",\n          \"project_name\": \"Weekly Researcher task - May 5\",\n          \"description\": \"string\",\n          \"total_price\": 9,\n          \"order_item\": {\n            \"id\": \"I-44556\",\n            \"plunet_id\": \"string\",\n            \"language_source\": \"en-US\",\n            \"language_target\": \"fr-FR\",\n            \"client_price\": 49.5,\n            \"status\": \"invoiced\",\n            \"price_line\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        {\n          \"requester\": \"Amber Russell\",\n          \"order_reference\": \"O-9703\",\n          \"project_name\": \"Weekly Researcher task - May 5\",\n          \"description\": \"string\",\n          \"total_price\": 9,\n          \"order_item\": {\n            \"id\": \"I-44556\",\n            \"plunet_id\": \"string\",\n            \"language_source\": \"en-US\",\n            \"language_target\": \"fr-FR\",\n            \"client_price\": 49.5,\n            \"status\": \"invoiced\",\n            \"price_line\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"invoice_number\": \"Worders-Invoice2847\",\n      \"created_at\": \"1994-02-12T00:12:04.444Z\",\n      \"payment_due_date\": \"2001-10-16\",\n      \"payment_date\": \"2015-07-31\",\n      \"description\": \"Collective invoice - May 2026\",\n      \"po_number\": \"string\",\n      \"client_ccy\": \"USD\",\n      \"status\": \"outstanding\",\n      \"totals\": {\n        \"net\": 5778,\n        \"outgoing\": 5778,\n        \"paid\": 0\n      },\n      \"customer\": {\n        \"plunet_id\": 12345,\n        \"name\": \"EBSCO\",\n        \"address\": \"EBSCO\\n10 Estes Street\\n01938 Ipswich\\nUnited States\"\n      },\n      \"payment_request_id\": \"09c290ef-2bc6-f532-08e5-a636aedb9f3f\",\n      \"items\": [\n        {\n          \"requester\": \"Amber Russell\",\n          \"order_reference\": \"O-9703\",\n          \"project_name\": \"Weekly Researcher task - May 5\",\n          \"description\": \"string\",\n          \"total_price\": 9,\n          \"order_item\": {\n            \"id\": \"I-44556\",\n            \"plunet_id\": \"string\",\n            \"language_source\": \"en-US\",\n            \"language_target\": \"fr-FR\",\n            \"client_price\": 49.5,\n            \"status\": \"invoiced\",\n            \"price_line\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        {\n          \"requester\": \"Amber Russell\",\n          \"order_reference\": \"O-9703\",\n          \"project_name\": \"Weekly Researcher task - May 5\",\n          \"description\": \"string\",\n          \"total_price\": 9,\n          \"order_item\": {\n            \"id\": \"I-44556\",\n            \"plunet_id\": \"string\",\n            \"language_source\": \"en-US\",\n            \"language_target\": \"fr-FR\",\n            \"client_price\": 49.5,\n            \"status\": \"invoiced\",\n            \"price_line\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"total\": 42,\n    \"page\": 1,\n    \"per_page\": 50\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8963c8a-bbcd-483f-82ec-1d07d31ac8f1",
+              "name": "unauthenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer_plunet_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cfa7c1ca-316e-4830-ae67-b7c204e9c4f0",
+          "name": "Show a single invoice",
+          "request": {
+            "name": "Show a single invoice",
+            "description": {},
+            "url": {
+              "path": [
+                "V1",
+                "invoices",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Plunet invoice id (e.g. \"2847\") or invoice_number (e.g. \"I-2847\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "_worders_session"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4360ce1f-3e9e-444b-800e-5bf1b510ed92",
+              "name": "lookup by decorated invoice_number",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Plunet invoice id (e.g. \"2847\") or invoice_number (e.g. \"I-2847\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invoice_number\": \"Worders-Invoice2847\",\n  \"created_at\": \"2019-12-10T09:50:17.327Z\",\n  \"payment_due_date\": \"1974-06-29\",\n  \"payment_date\": \"1975-06-13\",\n  \"description\": \"Collective invoice - May 2026\",\n  \"po_number\": \"string\",\n  \"client_ccy\": \"USD\",\n  \"status\": \"outstanding\",\n  \"totals\": {\n    \"net\": 5778,\n    \"outgoing\": 5778,\n    \"paid\": 0\n  },\n  \"customer\": {\n    \"plunet_id\": 12345,\n    \"name\": \"EBSCO\",\n    \"address\": \"EBSCO\\n10 Estes Street\\n01938 Ipswich\\nUnited States\"\n  },\n  \"payment_request_id\": \"ecab68d7-96ac-8247-bda7-11d91d27258f\",\n  \"items\": [\n    {\n      \"requester\": \"Amber Russell\",\n      \"order_reference\": \"O-9703\",\n      \"project_name\": \"Weekly Researcher task - May 5\",\n      \"description\": \"string\",\n      \"total_price\": 9,\n      \"order_item\": {\n        \"id\": \"I-44556\",\n        \"plunet_id\": \"string\",\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"client_price\": 49.5,\n        \"status\": \"invoiced\",\n        \"price_line\": [\n          {\n            \"price_unit_id\": 12,\n            \"service\": \"Culturalization\",\n            \"unit\": \"Hour\",\n            \"amount\": 0.55,\n            \"unit_price\": 90,\n            \"total\": 49.5\n          },\n          {\n            \"price_unit_id\": 12,\n            \"service\": \"Culturalization\",\n            \"unit\": \"Hour\",\n            \"amount\": 0.55,\n            \"unit_price\": 90,\n            \"total\": 49.5\n          }\n        ]\n      }\n    },\n    {\n      \"requester\": \"Amber Russell\",\n      \"order_reference\": \"O-9703\",\n      \"project_name\": \"Weekly Researcher task - May 5\",\n      \"description\": \"string\",\n      \"total_price\": 9,\n      \"order_item\": {\n        \"id\": \"I-44556\",\n        \"plunet_id\": \"string\",\n        \"language_source\": \"en-US\",\n        \"language_target\": \"fr-FR\",\n        \"client_price\": 49.5,\n        \"status\": \"invoiced\",\n        \"price_line\": [\n          {\n            \"price_unit_id\": 12,\n            \"service\": \"Culturalization\",\n            \"unit\": \"Hour\",\n            \"amount\": 0.55,\n            \"unit_price\": 90,\n            \"total\": 49.5\n          },\n          {\n            \"price_unit_id\": 12,\n            \"service\": \"Culturalization\",\n            \"unit\": \"Hour\",\n            \"amount\": 0.55,\n            \"unit_price\": 90,\n            \"total\": 49.5\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07aa62d8-5887-4b2e-a844-1b9cd7a203d4",
+              "name": "unknown invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "V1",
+                    "invoices",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Plunet invoice id (e.g. \"2847\") or invoice_number (e.g. \"I-2847\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "_worders_session",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.worders.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0b88e8be-6e37-479c-83a2-cfdd54d85180",
+    "name": "Worders API V1 Customers Invoices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Worders API endpoints (freelance invoice verification, webhooks, ...).",
+      "type": "text/plain"
+    }
+  }
+}

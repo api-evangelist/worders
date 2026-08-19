@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search customers by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/customers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Partial name match (case-insensitive). Empty returns all customers."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "List or search customers. Used by the budget export scenario to resolve a customer name to a Plunet identifier before calling /V1/orders."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

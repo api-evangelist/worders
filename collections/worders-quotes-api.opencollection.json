@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers Quotes API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/quotes",
+            "params": [
+              {
+                "name": "customer_plunet_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns quotes mirroring the quote PDF. Supports filtering by customer, status, and incremental polling via updated_since."
+        },
+        {
+          "info": {
+            "name": "Create a Plunet quote with items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.worders.net/V1/quotes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Quote + OrderItems in Plunet from Airtable-mapped data. Idempotent on `external_id`: the second POST returns 200 with the existing quote."
+        },
+        {
+          "info": {
+            "name": "Show a single quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/quotes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Plunet quote id (e.g. \"Q-1000\") or order_reference (e.g. \"Q-1446-01\")."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Show a single quote"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

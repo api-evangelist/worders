@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers Templates API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Plunet order templates available for a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/customers/:customer_id/templates",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "Customer's Plunet id (matches the `id` field in /V1/customers responses)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns Plunet `getTemplateList` results filtered by the customer's Plunet id. Used by the Adobe order-creation scenario to offer a template before POST /V1/orders."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

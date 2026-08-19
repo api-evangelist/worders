@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Worders API V1 Customers PurchaseOrders API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PurchaseOrders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List purchase orders for a freelancer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/freelancers/:freelancer_id/purchase_orders",
+            "params": [
+              {
+                "name": "freelancer_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period_start",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period_end",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Optional status filter, e.g. status[]=generated&status[]=paid"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "List purchase orders attached to a freelancer over a period. By default `deleted` and `deprecated` POs are excluded."
+        },
+        {
+          "info": {
+            "name": "PO detail with all its jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.worders.net/V1/purchase_orders/:po_number",
+            "params": [
+              {
+                "name": "po_number",
+                "value": "",
+                "type": "path",
+                "description": "PO number, e.g. PO-2025-001234"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "_worders_session",
+              "value": "{{_worders_session}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns the PO with its freelancer and all attached jobs (price, currency, language pair, order reference, delivery date). Used when an invoice cites a PO number."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
