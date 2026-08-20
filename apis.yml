@@ -88,6 +88,8 @@ apis:
   humanURL: https://api.worders.net/api-docs/index.html
   baseURL: https://api.worders.net
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -100,6 +102,8 @@ apis:
   humanURL: https://api.worders.net/api-docs/index.html
   baseURL: https://api.worders.net
   tags:
+  - Purchase Orders
+  tags_raw:
   - PurchaseOrders
   properties:
   - type: OpenAPI
