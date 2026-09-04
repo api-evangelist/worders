@@ -24,15 +24,16 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: unknown
-  onboarding: self-serve
+  onboarding: unknown
   trial: false
   try_now: false
   public: false
-  label: Self-serve signup
-  confidence: medium
+  label: Unknown
+  confidence: low
   source:
   - authentication
-  generated: '2026-07-22'
+  - security
+  generated: '2026-09-03'
   method: derived
 image: https://cdn.prod.website-files.com/67befd57da776c510ff3b66b/6830866136954deeba98bba4_worders_webclip.png
 x-type: company
@@ -178,8 +179,9 @@ common:
   url: lifecycle/worders-lifecycle.yml
 - type: Conformance
   url: conformance/worders-conformance.yml
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/worders-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
 - type: LLMsTxt
   url: llms/worders-llms.txt
 - type: Overlay
