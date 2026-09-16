@@ -109,20 +109,6 @@ apis:
     url: openapi/worders-orders-api-openapi.yml
   - type: Documentation
     url: https://api.worders.net/api-docs/index.html
-- aid: worders:worders-purchaseorders-api
-  name: Worders PurchaseOrders API
-  description: The PurchaseOrders API from Worders — 2 operation(s) for purchaseorders.
-  humanURL: https://api.worders.net/api-docs/index.html
-  baseURL: https://api.worders.net
-  tags:
-  - Purchase Orders
-  tags_raw:
-  - PurchaseOrders
-  properties:
-  - type: OpenAPI
-    url: openapi/worders-purchaseorders-api-openapi.yml
-  - type: Documentation
-    url: https://api.worders.net/api-docs/index.html
 - aid: worders:worders-quotes-api
   name: Worders Quotes API
   description: The Quotes API from Worders — 2 operation(s) for quotes.
@@ -145,6 +131,18 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/worders-templates-api-openapi.yml
+  - type: Documentation
+    url: https://api.worders.net/api-docs/index.html
+- aid: worders:worders-purchase-orders-api
+  name: Worders Purchase Orders API
+  description: The Purchase Orders API from Worders — 2 operation(s) for purchase orders.
+  humanURL: https://api.worders.net/api-docs/index.html
+  baseURL: https://api.worders.net
+  tags:
+  - Purchase Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/worders-purchase-orders-api-openapi.yml
   - type: Documentation
     url: https://api.worders.net/api-docs/index.html
 maintainers:
