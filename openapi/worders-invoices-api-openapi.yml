@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Worders API V1 Customers Invoices API
+  title: Worders API V1 Invoices API
   version: v1
   description: Worders API endpoints (freelance invoice verification, webhooks, ...).
 servers:
@@ -62,6 +62,8 @@ paths:
                     $ref: '#/components/schemas/PaginationMeta'
         '401':
           description: unauthenticated
+      operationId: getV1Invoices
+      x-operation-id-source: derived
   /V1/invoices/{id}:
     parameters:
     - name: id
@@ -90,137 +92,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1InvoicesById
+      x-operation-id-source: derived
 components:
   schemas:
-    QuoteItem:
-      type: object
-      properties:
-        id:
-          type: string
-          nullable: true
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type: string
-          nullable: true
-          description: Same as id
-        language_source:
-          type: string
-          nullable: true
-          example: en-US
-        language_target:
-          type: string
-          nullable: true
-          example: fr-FR
-        client_price:
-          type: number
-          format: float
-          nullable: true
-          example: 49.5
-          description: Item price in the customer-facing currency.
-        status:
-          type: string
-          nullable: true
-          example: invoiced
-        price_line:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLineEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              nullable: true
-          required:
-          - code
-          - message
-      required:
-      - error
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    QuoteCustomer:
-      type: object
-      nullable: true
-      properties:
-        plunet_id:
-          type: integer
-          nullable: true
-          example: 12345
-        name:
-          type: string
-          example: EBSCO
-        address:
-          type: string
-          nullable: true
-          example: 'EBSCO
-
-            10 Estes Street
-
-            01938 Ipswich
-
-            United States'
-    InvoiceLine:
-      type: object
-      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
-      properties:
-        requester:
-          type: string
-          nullable: true
-          example: Amber Russell
-          description: Order contact person full name.
-        order_reference:
-          type: string
-          nullable: true
-          example: O-9703
-          description: Falls back to the originating quote order_reference.
-        project_name:
-          type: string
-          nullable: true
-          example: Weekly Researcher task - May 5
-        description:
-          type: string
-          nullable: true
-        total_price:
-          type: number
-          format: float
-          nullable: true
-          example: 9.0
-          description: Line total in the customer-facing currency.
-        order_item:
-          $ref: '#/components/schemas/QuoteItem'
-          nullable: true
     PriceLineEntry:
       type: object
       properties:
         price_unit_id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 12
         service:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Culturalization
         unit:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Hour
         amount:
           type: number
@@ -234,67 +126,207 @@ components:
           type: number
           format: float
           example: 49.5
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
     Invoice:
       type: object
       properties:
         invoice_number:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Worders-Invoice2847
         created_at:
           type: string
           format: date-time
         payment_due_date:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date
-          nullable: true
         payment_date:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date
-          nullable: true
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Collective invoice - May 2026
         po_number:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         client_ccy:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: USD
         status:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: outstanding
         totals:
           type: object
           properties:
             net:
-              type: number
+              type:
+              - number
+              - 'null'
               format: float
-              nullable: true
               example: 5778.0
             outgoing:
-              type: number
+              type:
+              - number
+              - 'null'
               format: float
-              nullable: true
               example: 5778.0
             paid:
-              type: number
+              type:
+              - number
+              - 'null'
               format: float
-              nullable: true
               example: 0
         customer:
           $ref: '#/components/schemas/QuoteCustomer'
         payment_request_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
         items:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLine'
+    QuoteItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 49.5
+          description: Item price in the customer-facing currency.
+        status:
+          type:
+          - string
+          - 'null'
+          example: invoiced
+        price_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLineEntry'
+    InvoiceLine:
+      type: object
+      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
+      properties:
+        requester:
+          type:
+          - string
+          - 'null'
+          example: Amber Russell
+          description: Order contact person full name.
+        order_reference:
+          type:
+          - string
+          - 'null'
+          example: O-9703
+          description: Falls back to the originating quote order_reference.
+        project_name:
+          type:
+          - string
+          - 'null'
+          example: Weekly Researcher task - May 5
+        description:
+          type:
+          - string
+          - 'null'
+        total_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 9.0
+          description: Line total in the customer-facing currency.
+        order_item:
+          $ref: '#/components/schemas/QuoteItem'
+    QuoteCustomer:
+      type:
+      - object
+      - 'null'
+      properties:
+        plunet_id:
+          type:
+          - integer
+          - 'null'
+          example: 12345
+        name:
+          type: string
+          example: EBSCO
+        address:
+          type:
+          - string
+          - 'null'
+          example: 'EBSCO
+
+            10 Estes Street
+
+            01938 Ipswich
+
+            United States'
   securitySchemes:
     cookie_session:
       type: apiKey

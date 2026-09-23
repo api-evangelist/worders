@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Worders API V1 Customers Quotes API
+  title: Worders API V1 Quotes API
   version: v1
   description: Worders API endpoints (freelance invoice verification, webhooks, ...).
 servers:
@@ -62,6 +62,8 @@ paths:
                     $ref: '#/components/schemas/PaginationMeta'
         '401':
           description: unauthenticated
+      operationId: getV1Quotes
+      x-operation-id-source: derived
     post:
       summary: Create a Plunet quote with items
       tags:
@@ -101,6 +103,8 @@ paths:
             schema:
               $ref: '#/components/schemas/QuoteCreateRequest'
         required: true
+      operationId: postV1Quotes
+      x-operation-id-source: derived
   /V1/quotes/{id}:
     parameters:
     - name: id
@@ -129,72 +133,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+      operationId: getV1QuotesById
+      x-operation-id-source: derived
 components:
   schemas:
-    QuoteItem:
+    PriceLineEntry:
       type: object
       properties:
-        id:
-          type: string
-          nullable: true
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type: string
-          nullable: true
-          description: Same as id
-        language_source:
-          type: string
-          nullable: true
-          example: en-US
-        language_target:
-          type: string
-          nullable: true
-          example: fr-FR
-        client_price:
+        price_unit_id:
+          type:
+          - integer
+          - 'null'
+          example: 12
+        service:
+          type:
+          - string
+          - 'null'
+          example: Culturalization
+        unit:
+          type:
+          - string
+          - 'null'
+          example: Hour
+        amount:
           type: number
           format: float
-          nullable: true
-          example: 49.5
-          description: Item price in the customer-facing currency.
-        status:
-          type: string
-          nullable: true
-          example: invoiced
-        price_line:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLineEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              nullable: true
-          required:
-          - code
-          - message
-      required:
-      - error
-    PaginationMeta:
-      type: object
-      properties:
+          example: 0.55
+        unit_price:
+          type: number
+          format: float
+          example: 90.0
         total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
+          type: number
+          format: float
+          example: 49.5
     QuoteCreateRequest:
       type: object
       required:
@@ -254,24 +226,29 @@ components:
               type: string
               example: EUR
             order_date:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date
-              nullable: true
             delivery_deadline:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date-time
-              nullable: true
             rate:
-              type: number
+              type:
+              - number
+              - 'null'
               format: float
-              nullable: true
               example: 0.1
             project_manager_memo:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             template_id:
-              type: integer
-              nullable: true
+              type:
+              - integer
+              - 'null'
               example: 42
             items:
               type: array
@@ -289,63 +266,45 @@ components:
                     format: float
                     example: 1200
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   delivery_date:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: date
-                    nullable: true
-    QuoteCreateResponse:
+    PaginationMeta:
       type: object
       properties:
-        id:
-          type: string
-          nullable: true
-          example: Q-12345
-          description: Plunet quote id
-        plunet_id:
-          type: string
-          nullable: true
-          description: Same as id
-        created:
-          type: boolean
-          description: true when newly created, false when idempotent hit on existing external_id
-        order_reference:
-          type: string
-          nullable: true
-          example: Q-1446-01
-        status:
-          type: string
-          nullable: true
-          example: in_preparation
-        external_id:
-          type: string
-          nullable: true
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                nullable: true
-                description: Plunet item id
-              language_source:
-                type: string
-                nullable: true
-              language_target:
-                type: string
-                nullable: true
-        urls:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
+    ErrorResponse:
+      type: object
+      properties:
+        error:
           type: object
           properties:
-            worders_admin:
+            code:
               type: string
-              format: uri
-            plunet:
+            message:
               type: string
-              format: uri
-              nullable: true
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
     Quote:
       type: object
       properties:
@@ -354,42 +313,50 @@ components:
           example: Q-1446-01
           description: Quote order_reference
         plunet_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Plunet quote id
         order_reference:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Same as id; canonical reference like "Q-1446-01"
         created_at:
           type: string
           format: date-time
         valid_until:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date
-          nullable: true
           description: Quote validity end date (created_at + 1 month).
         status:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: pending
         project_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         client_ccy:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: USD
         price_in_client_ccy:
-          type: number
+          type:
+          - number
+          - 'null'
           format: float
-          nullable: true
           example: 5778.0
         customer:
           $ref: '#/components/schemas/QuoteCustomer'
         contact_person:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             full_name:
               type: string
@@ -399,8 +366,9 @@ components:
               format: email
               example: amberrussell@ebsco.com
         project_manager:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             full_name:
               type: string
@@ -409,20 +377,123 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/QuoteItem'
-    QuoteCustomer:
+    QuoteItem:
       type: object
-      nullable: true
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 49.5
+          description: Item price in the customer-facing currency.
+        status:
+          type:
+          - string
+          - 'null'
+          example: invoiced
+        price_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLineEntry'
+    QuoteCreateResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: Q-12345
+          description: Plunet quote id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        created:
+          type: boolean
+          description: true when newly created, false when idempotent hit on existing external_id
+        order_reference:
+          type:
+          - string
+          - 'null'
+          example: Q-1446-01
+        status:
+          type:
+          - string
+          - 'null'
+          example: in_preparation
+        external_id:
+          type:
+          - string
+          - 'null'
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type:
+                - string
+                - 'null'
+                description: Plunet item id
+              language_source:
+                type:
+                - string
+                - 'null'
+              language_target:
+                type:
+                - string
+                - 'null'
+        urls:
+          type: object
+          properties:
+            worders_admin:
+              type: string
+              format: uri
+            plunet:
+              type:
+              - string
+              - 'null'
+              format: uri
+    QuoteCustomer:
+      type:
+      - object
+      - 'null'
       properties:
         plunet_id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 12345
         name:
           type: string
           example: EBSCO
         address:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: 'EBSCO
 
             10 Estes Street
@@ -430,33 +501,6 @@ components:
             01938 Ipswich
 
             United States'
-    PriceLineEntry:
-      type: object
-      properties:
-        price_unit_id:
-          type: integer
-          nullable: true
-          example: 12
-        service:
-          type: string
-          nullable: true
-          example: Culturalization
-        unit:
-          type: string
-          nullable: true
-          example: Hour
-        amount:
-          type: number
-          format: float
-          example: 0.55
-        unit_price:
-          type: number
-          format: float
-          example: 90.0
-        total:
-          type: number
-          format: float
-          example: 49.5
   securitySchemes:
     cookie_session:
       type: apiKey

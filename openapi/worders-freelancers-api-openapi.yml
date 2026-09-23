@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Worders API V1 Customers Freelancers API
+  title: Worders API V1 Freelancers API
   version: v1
   description: Worders API endpoints (freelance invoice verification, webhooks, ...).
 servers:
@@ -38,6 +38,8 @@ paths:
                       $ref: '#/components/schemas/Freelancer'
         '401':
           description: unauthenticated
+      operationId: getV1Freelancers
+      x-operation-id-source: derived
 components:
   schemas:
     Freelancer:
@@ -47,9 +49,10 @@ components:
           type: string
           format: uuid
         internal_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: Same as id
         full_name:
           type: string

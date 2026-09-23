@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Worders API V1 Customers API
   version: v1
@@ -38,14 +38,17 @@ paths:
                       $ref: '#/components/schemas/Customer'
         '401':
           description: unauthenticated
+      operationId: getV1Customers
+      x-operation-id-source: derived
 components:
   schemas:
     Customer:
       type: object
       properties:
         id:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 12345
           description: Plunet customer id
         name:

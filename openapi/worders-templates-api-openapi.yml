@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Worders API V1 Customers Templates API
+  title: Worders API V1 Templates API
   version: v1
   description: Worders API endpoints (freelance invoice verification, webhooks, ...).
 servers:
@@ -36,6 +36,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/PlunetTemplate'
+      operationId: getV1CustomersByCustomerIdTemplates
+      x-operation-id-source: derived
 components:
   schemas:
     PlunetTemplate:
@@ -48,8 +50,9 @@ components:
           type: string
           example: Adobe — Standard Translation
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Default template for Adobe orders
   securitySchemes:
     cookie_session:
