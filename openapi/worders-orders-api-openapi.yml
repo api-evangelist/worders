@@ -140,125 +140,65 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PaginationMeta:
+    OrderItem:
       type: object
       properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    OrderCreateRequest:
-      type: object
-      required:
-      - order
-      properties:
-        order:
-          type: object
-          required:
-          - customer
-          - project_manager
-          - items
-          properties:
-            external_id:
-              type: string
-              example: rec_AIRTABLE_RECORD_ID
-              description: Airtable record id, used for idempotence
-            customer:
-              type: object
-              description: Identify the customer by plunet_id, id (uuid) or name (one of)
-              properties:
-                plunet_id:
-                  type: integer
-                  example: 12345
-                id:
-                  type: string
-                  format: uuid
-                name:
-                  type: string
-            project_manager:
-              type: object
-              description: Identify the PM by email or id (uuid)
-              properties:
-                email:
-                  type: string
-                  format: email
-                  example: pm@worders.net
-                id:
-                  type: string
-                  format: uuid
-            contact_person:
-              type: object
-              description: Optional. Identify by plunet_id (Plunet customer_contact_id) or email
-              properties:
-                plunet_id:
-                  type: integer
-                  example: 67890
-                email:
-                  type: string
-                  format: email
-            project_name:
-              type: string
-              example: Adobe — Acrobat Q2 update
-            subject:
-              type: string
-              example: Translation of help articles
-            currency:
-              type: string
-              example: EUR
-            order_date:
-              type:
-              - string
-              - 'null'
-              format: date
-            delivery_deadline:
-              type:
-              - string
-              - 'null'
-              format: date-time
-            rate:
-              type:
-              - number
-              - 'null'
-              format: float
-              example: 0.1
-            project_manager_memo:
-              type:
-              - string
-              - 'null'
-            template_id:
-              type:
-              - integer
-              - 'null'
-              example: 42
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  language_source:
-                    type: string
-                    example: en-US
-                  language_target:
-                    type: string
-                    example: fr-FR
-                  quantity:
-                    type: number
-                    format: float
-                    example: 1200
-                  description:
-                    type:
-                    - string
-                    - 'null'
-                  delivery_date:
-                    type:
-                    - string
-                    - 'null'
-                    format: date
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        quantity:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1200
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1372.64
+          description: Item price in internal currency (EUR).
+        currency:
+          type:
+          - string
+          - 'null'
+          example: EUR
+          description: Internal currency (always EUR).
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1500.0
+          description: Item price in the customer-facing currency (matches the PDF).
+        client_currency:
+          type:
+          - string
+          - 'null'
+          example: USD
+          description: Customer-facing currency on the item.
+        status:
+          type: string
+          example: approved
     Customer:
       type: object
       properties:
@@ -273,25 +213,6 @@ components:
           example: AcmeCorp
       required:
       - name
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     OrderCreateResponse:
       type: object
       properties:
@@ -442,65 +363,144 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    OrderItem:
+    ErrorResponse:
       type: object
       properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        language_source:
-          type:
-          - string
-          - 'null'
-          example: en-US
-        language_target:
-          type:
-          - string
-          - 'null'
-          example: fr-FR
-        quantity:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1200
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1372.64
-          description: Item price in internal currency (EUR).
-        currency:
-          type:
-          - string
-          - 'null'
-          example: EUR
-          description: Internal currency (always EUR).
-        client_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1500.0
-          description: Item price in the customer-facing currency (matches the PDF).
-        client_currency:
-          type:
-          - string
-          - 'null'
-          example: USD
-          description: Customer-facing currency on the item.
-        status:
-          type: string
-          example: approved
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    OrderCreateRequest:
+      type: object
+      required:
+      - order
+      properties:
+        order:
+          type: object
+          required:
+          - customer
+          - project_manager
+          - items
+          properties:
+            external_id:
+              type: string
+              example: rec_AIRTABLE_RECORD_ID
+              description: Airtable record id, used for idempotence
+            customer:
+              type: object
+              description: Identify the customer by plunet_id, id (uuid) or name (one of)
+              properties:
+                plunet_id:
+                  type: integer
+                  example: 12345
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+            project_manager:
+              type: object
+              description: Identify the PM by email or id (uuid)
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: pm@worders.net
+                id:
+                  type: string
+                  format: uuid
+            contact_person:
+              type: object
+              description: Optional. Identify by plunet_id (Plunet customer_contact_id) or email
+              properties:
+                plunet_id:
+                  type: integer
+                  example: 67890
+                email:
+                  type: string
+                  format: email
+            project_name:
+              type: string
+              example: Adobe — Acrobat Q2 update
+            subject:
+              type: string
+              example: Translation of help articles
+            currency:
+              type: string
+              example: EUR
+            order_date:
+              type:
+              - string
+              - 'null'
+              format: date
+            delivery_deadline:
+              type:
+              - string
+              - 'null'
+              format: date-time
+            rate:
+              type:
+              - number
+              - 'null'
+              format: float
+              example: 0.1
+            project_manager_memo:
+              type:
+              - string
+              - 'null'
+            template_id:
+              type:
+              - integer
+              - 'null'
+              example: 42
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  language_source:
+                    type: string
+                    example: en-US
+                  language_target:
+                    type: string
+                    example: fr-FR
+                  quantity:
+                    type: number
+                    format: float
+                    example: 1200
+                  description:
+                    type:
+                    - string
+                    - 'null'
+                  delivery_date:
+                    type:
+                    - string
+                    - 'null'
+                    format: date
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
   securitySchemes:
     cookie_session:
       type: apiKey

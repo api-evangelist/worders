@@ -108,6 +108,83 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    PurchaseOrderSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Same as id
+        po_number:
+          type: string
+          example: PO-2025-001234
+        currency:
+          type: string
+          example: EUR
+        status:
+          type: string
+          example: generated
+        created_at:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: float
+          example: 1250.0
+        jobs_count:
+          type: integer
+          example: 5
+        freelancer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+    PurchaseOrderDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        internal_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Same as id
+        po_number:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: float
+        freelancer:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
     Job:
       type: object
       properties:
@@ -159,83 +236,6 @@ components:
           - string
           - 'null'
           format: date-time
-    PurchaseOrderDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        internal_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Same as id
-        po_number:
-          type: string
-        currency:
-          type: string
-        status:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        total_amount:
-          type: number
-          format: float
-        freelancer:
-          type:
-          - object
-          - 'null'
-          properties:
-            id:
-              type: string
-              format: uuid
-            full_name:
-              type: string
-        jobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Job'
-    PurchaseOrderSummary:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        internal_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Same as id
-        po_number:
-          type: string
-          example: PO-2025-001234
-        currency:
-          type: string
-          example: EUR
-        status:
-          type: string
-          example: generated
-        created_at:
-          type: string
-          format: date-time
-        total_amount:
-          type: number
-          format: float
-          example: 1250.0
-        jobs_count:
-          type: integer
-          example: 5
-        freelancer:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            full_name:
-              type: string
     PaginationMeta:
       type: object
       properties:

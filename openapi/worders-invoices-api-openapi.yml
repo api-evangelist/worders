@@ -96,6 +96,99 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    QuoteItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 49.5
+          description: Item price in the customer-facing currency.
+        status:
+          type:
+          - string
+          - 'null'
+          example: invoiced
+        price_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLineEntry'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    InvoiceLine:
+      type: object
+      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
+      properties:
+        requester:
+          type:
+          - string
+          - 'null'
+          example: Amber Russell
+          description: Order contact person full name.
+        order_reference:
+          type:
+          - string
+          - 'null'
+          example: O-9703
+          description: Falls back to the originating quote order_reference.
+        project_name:
+          type:
+          - string
+          - 'null'
+          example: Weekly Researcher task - May 5
+        description:
+          type:
+          - string
+          - 'null'
+        total_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 9.0
+          description: Line total in the customer-facing currency.
+        order_item:
+          $ref: '#/components/schemas/QuoteItem'
     PriceLineEntry:
       type: object
       properties:
@@ -126,37 +219,6 @@ components:
           type: number
           format: float
           example: 49.5
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     Invoice:
       type: object
       properties:
@@ -229,80 +291,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLine'
-    QuoteItem:
+    PaginationMeta:
       type: object
       properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        language_source:
-          type:
-          - string
-          - 'null'
-          example: en-US
-        language_target:
-          type:
-          - string
-          - 'null'
-          example: fr-FR
-        client_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 49.5
-          description: Item price in the customer-facing currency.
-        status:
-          type:
-          - string
-          - 'null'
-          example: invoiced
-        price_line:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLineEntry'
-    InvoiceLine:
-      type: object
-      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
-      properties:
-        requester:
-          type:
-          - string
-          - 'null'
-          example: Amber Russell
-          description: Order contact person full name.
-        order_reference:
-          type:
-          - string
-          - 'null'
-          example: O-9703
-          description: Falls back to the originating quote order_reference.
-        project_name:
-          type:
-          - string
-          - 'null'
-          example: Weekly Researcher task - May 5
-        description:
-          type:
-          - string
-          - 'null'
-        total_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 9.0
-          description: Line total in the customer-facing currency.
-        order_item:
-          $ref: '#/components/schemas/QuoteItem'
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     QuoteCustomer:
       type:
       - object

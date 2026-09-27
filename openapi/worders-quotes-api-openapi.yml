@@ -137,6 +137,125 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    QuoteItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 49.5
+          description: Item price in the customer-facing currency.
+        status:
+          type:
+          - string
+          - 'null'
+          example: invoiced
+        price_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLineEntry'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    QuoteCreateResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: Q-12345
+          description: Plunet quote id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        created:
+          type: boolean
+          description: true when newly created, false when idempotent hit on existing external_id
+        order_reference:
+          type:
+          - string
+          - 'null'
+          example: Q-1446-01
+        status:
+          type:
+          - string
+          - 'null'
+          example: in_preparation
+        external_id:
+          type:
+          - string
+          - 'null'
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type:
+                - string
+                - 'null'
+                description: Plunet item id
+              language_source:
+                type:
+                - string
+                - 'null'
+              language_target:
+                type:
+                - string
+                - 'null'
+        urls:
+          type: object
+          properties:
+            worders_admin:
+              type: string
+              format: uri
+            plunet:
+              type:
+              - string
+              - 'null'
+              format: uri
     PriceLineEntry:
       type: object
       properties:
@@ -167,6 +286,18 @@ components:
           type: number
           format: float
           example: 49.5
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     QuoteCreateRequest:
       type: object
       required:
@@ -274,37 +405,6 @@ components:
                     - string
                     - 'null'
                     format: date
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     Quote:
       type: object
       properties:
@@ -377,106 +477,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/QuoteItem'
-    QuoteItem:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        language_source:
-          type:
-          - string
-          - 'null'
-          example: en-US
-        language_target:
-          type:
-          - string
-          - 'null'
-          example: fr-FR
-        client_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 49.5
-          description: Item price in the customer-facing currency.
-        status:
-          type:
-          - string
-          - 'null'
-          example: invoiced
-        price_line:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLineEntry'
-    QuoteCreateResponse:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: Q-12345
-          description: Plunet quote id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        created:
-          type: boolean
-          description: true when newly created, false when idempotent hit on existing external_id
-        order_reference:
-          type:
-          - string
-          - 'null'
-          example: Q-1446-01
-        status:
-          type:
-          - string
-          - 'null'
-          example: in_preparation
-        external_id:
-          type:
-          - string
-          - 'null'
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type:
-                - string
-                - 'null'
-                description: Plunet item id
-              language_source:
-                type:
-                - string
-                - 'null'
-              language_target:
-                type:
-                - string
-                - 'null'
-        urls:
-          type: object
-          properties:
-            worders_admin:
-              type: string
-              format: uri
-            plunet:
-              type:
-              - string
-              - 'null'
-              format: uri
     QuoteCustomer:
       type:
       - object
