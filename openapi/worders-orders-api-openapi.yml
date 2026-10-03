@@ -140,6 +140,96 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OrderCreateResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: O-78901
+          description: Plunet order id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        created:
+          type: boolean
+          description: true when newly created, false when idempotent hit on existing external_id
+        order_reference:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+          example: in_preparation
+        external_id:
+          type:
+          - string
+          - 'null'
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type:
+                - string
+                - 'null'
+                description: Plunet item id
+              language_source:
+                type:
+                - string
+                - 'null'
+              language_target:
+                type:
+                - string
+                - 'null'
+        urls:
+          type: object
+          properties:
+            worders_admin:
+              type: string
+              format: uri
+            plunet:
+              type:
+              - string
+              - 'null'
+              format: uri
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     OrderItem:
       type: object
       properties:
@@ -213,175 +303,6 @@ components:
           example: AcmeCorp
       required:
       - name
-    OrderCreateResponse:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: O-78901
-          description: Plunet order id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        created:
-          type: boolean
-          description: true when newly created, false when idempotent hit on existing external_id
-        order_reference:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - string
-          - 'null'
-          example: in_preparation
-        external_id:
-          type:
-          - string
-          - 'null'
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type:
-                - string
-                - 'null'
-                description: Plunet item id
-              language_source:
-                type:
-                - string
-                - 'null'
-              language_target:
-                type:
-                - string
-                - 'null'
-        urls:
-          type: object
-          properties:
-            worders_admin:
-              type: string
-              format: uri
-            plunet:
-              type:
-              - string
-              - 'null'
-              format: uri
-    Order:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: O-78901
-          description: Plunet order id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        order_reference:
-          type: string
-          example: ORD-2025-789
-        quote_number:
-          type:
-          - string
-          - 'null'
-          example: Q-1446-01
-          description: Source quote's order_reference, if the order originated from a quote.
-        project_name:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - string
-          - 'null'
-          example: completed
-        all_items_approved:
-          type: boolean
-          example: true
-        client:
-          $ref: '#/components/schemas/Customer'
-        contact_person:
-          type:
-          - object
-          - 'null'
-          properties:
-            id:
-              type: string
-              format: uuid
-            full_name:
-              type: string
-            email:
-              type: string
-              format: email
-        currency:
-          type:
-          - string
-          - 'null'
-          example: EUR
-          description: Internal currency (always EUR).
-        total_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 4117.92
-          description: Order total in internal currency (EUR).
-        client_ccy:
-          type:
-          - string
-          - 'null'
-          example: USD
-          description: Customer-facing currency (matches the PDF invoice/quote).
-        total_price_in_client_ccy:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 4500.0
-          description: Order total in the customer-facing currency.
-        due_date:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     OrderCreateRequest:
       type: object
       required:
@@ -489,18 +410,97 @@ components:
                     - string
                     - 'null'
                     format: date
-    PaginationMeta:
+    Order:
       type: object
       properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
+        id:
+          type:
+          - string
+          - 'null'
+          example: O-78901
+          description: Plunet order id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        order_reference:
+          type: string
+          example: ORD-2025-789
+        quote_number:
+          type:
+          - string
+          - 'null'
+          example: Q-1446-01
+          description: Source quote's order_reference, if the order originated from a quote.
+        project_name:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+          example: completed
+        all_items_approved:
+          type: boolean
+          example: true
+        client:
+          $ref: '#/components/schemas/Customer'
+        contact_person:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+              format: uuid
+            full_name:
+              type: string
+            email:
+              type: string
+              format: email
+        currency:
+          type:
+          - string
+          - 'null'
+          example: EUR
+          description: Internal currency (always EUR).
+        total_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 4117.92
+          description: Order total in internal currency (EUR).
+        client_ccy:
+          type:
+          - string
+          - 'null'
+          example: USD
+          description: Customer-facing currency (matches the PDF invoice/quote).
+        total_price_in_client_ccy:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 4500.0
+          description: Order total in the customer-facing currency.
+        due_date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
   securitySchemes:
     cookie_session:
       type: apiKey
