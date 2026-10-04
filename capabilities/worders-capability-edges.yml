@@ -1,0 +1,35 @@
+slug: worders
+provider: Worders
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Purchase Orders
+  spec_file: worders-purchase-orders-api-openapi.yml
+  capability_id: BC-500.30
+  capability_id_l1: BC-500
+  capability_name: Purchase Order Management
+  confidence: 0.8
+  evidence: GET /V1/freelancers/{freelancer_id}/purchase_orders "List purchase orders for a freelancer";
+    GET /V1/purchase_orders/{po_number} "PO detail with all its jobs"; schemas PurchaseOrderDetail, PurchaseOrderSummary
+  reason: Operations expose purchase orders issued to freelance suppliers and their constituent jobs,
+    which is purchase order management on the procure-to-pay side.
+- tag: Quotes
+  spec_file: worders-quotes-api-openapi.yml
+  capability_id: BC-410.40
+  capability_id_l1: BC-410
+  capability_name: Quote & Configuration Management
+  confidence: 0.75
+  evidence: POST /V1/quotes "Create a Plunet quote with items"; schemas QuoteCreateRequest, PriceLineEntry,
+    QuoteCustomer
+  reason: Operations create and retrieve customer-facing quotes with priced line items, which is quote/configure-price-quote
+    activity in the sales lead-to-order flow rather than invoicing or billing.
