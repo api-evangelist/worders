@@ -137,6 +137,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     QuoteItem:
       type: object
       properties:
@@ -177,25 +189,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PriceLineEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     QuoteCreateRequest:
       type: object
       required:
@@ -303,48 +296,49 @@ components:
                     - string
                     - 'null'
                     format: date
-    PaginationMeta:
-      type: object
+    QuoteCustomer:
+      type:
+      - object
+      - 'null'
       properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    PriceLineEntry:
-      type: object
-      properties:
-        price_unit_id:
+        plunet_id:
           type:
           - integer
           - 'null'
-          example: 12
-        service:
+          example: 12345
+        name:
+          type: string
+          example: EBSCO
+        address:
           type:
           - string
           - 'null'
-          example: Culturalization
-        unit:
-          type:
-          - string
-          - 'null'
-          example: Hour
-        amount:
-          type: number
-          format: float
-          example: 0.55
-        unit_price:
-          type: number
-          format: float
-          example: 90.0
-        total:
-          type: number
-          format: float
-          example: 49.5
+          example: 'EBSCO
+
+            10 Estes Street
+
+            01938 Ipswich
+
+            United States'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
     QuoteCreateResponse:
       type: object
       properties:
@@ -477,30 +471,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/QuoteItem'
-    QuoteCustomer:
-      type:
-      - object
-      - 'null'
+    PriceLineEntry:
+      type: object
       properties:
-        plunet_id:
+        price_unit_id:
           type:
           - integer
           - 'null'
-          example: 12345
-        name:
-          type: string
-          example: EBSCO
-        address:
+          example: 12
+        service:
           type:
           - string
           - 'null'
-          example: 'EBSCO
-
-            10 Estes Street
-
-            01938 Ipswich
-
-            United States'
+          example: Culturalization
+        unit:
+          type:
+          - string
+          - 'null'
+          example: Hour
+        amount:
+          type: number
+          format: float
+          example: 0.55
+        unit_price:
+          type: number
+          format: float
+          example: 90.0
+        total:
+          type: number
+          format: float
+          example: 49.5
   securitySchemes:
     cookie_session:
       type: apiKey

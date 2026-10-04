@@ -140,84 +140,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OrderCreateResponse:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: O-78901
-          description: Plunet order id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        created:
-          type: boolean
-          description: true when newly created, false when idempotent hit on existing external_id
-        order_reference:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - string
-          - 'null'
-          example: in_preparation
-        external_id:
-          type:
-          - string
-          - 'null'
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type:
-                - string
-                - 'null'
-                description: Plunet item id
-              language_source:
-                type:
-                - string
-                - 'null'
-              language_target:
-                type:
-                - string
-                - 'null'
-        urls:
-          type: object
-          properties:
-            worders_admin:
-              type: string
-              format: uri
-            plunet:
-              type:
-              - string
-              - 'null'
-              format: uri
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
     PaginationMeta:
       type: object
       properties:
@@ -230,79 +152,6 @@ components:
         per_page:
           type: integer
           example: 50
-    OrderItem:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        language_source:
-          type:
-          - string
-          - 'null'
-          example: en-US
-        language_target:
-          type:
-          - string
-          - 'null'
-          example: fr-FR
-        quantity:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1200
-        price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1372.64
-          description: Item price in internal currency (EUR).
-        currency:
-          type:
-          - string
-          - 'null'
-          example: EUR
-          description: Internal currency (always EUR).
-        client_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 1500.0
-          description: Item price in the customer-facing currency (matches the PDF).
-        client_currency:
-          type:
-          - string
-          - 'null'
-          example: USD
-          description: Customer-facing currency on the item.
-        status:
-          type: string
-          example: approved
-    Customer:
-      type: object
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-          example: 12345
-          description: Plunet customer id
-        name:
-          type: string
-          example: AcmeCorp
-      required:
-      - name
     OrderCreateRequest:
       type: object
       required:
@@ -410,6 +259,157 @@ components:
                     - string
                     - 'null'
                     format: date
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    OrderCreateResponse:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: O-78901
+          description: Plunet order id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        created:
+          type: boolean
+          description: true when newly created, false when idempotent hit on existing external_id
+        order_reference:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+          example: in_preparation
+        external_id:
+          type:
+          - string
+          - 'null'
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type:
+                - string
+                - 'null'
+                description: Plunet item id
+              language_source:
+                type:
+                - string
+                - 'null'
+              language_target:
+                type:
+                - string
+                - 'null'
+        urls:
+          type: object
+          properties:
+            worders_admin:
+              type: string
+              format: uri
+            plunet:
+              type:
+              - string
+              - 'null'
+              format: uri
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        quantity:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1200
+        price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1372.64
+          description: Item price in internal currency (EUR).
+        currency:
+          type:
+          - string
+          - 'null'
+          example: EUR
+          description: Internal currency (always EUR).
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 1500.0
+          description: Item price in the customer-facing currency (matches the PDF).
+        client_currency:
+          type:
+          - string
+          - 'null'
+          example: USD
+          description: Customer-facing currency on the item.
+        status:
+          type: string
+          example: approved
+    Customer:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          example: 12345
+          description: Plunet customer id
+        name:
+          type: string
+          example: AcmeCorp
+      required:
+      - name
     Order:
       type: object
       properties:

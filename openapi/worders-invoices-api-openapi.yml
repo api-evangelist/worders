@@ -96,40 +96,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    InvoiceLine:
+    PaginationMeta:
       type: object
-      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
       properties:
-        requester:
-          type:
-          - string
-          - 'null'
-          example: Amber Russell
-          description: Order contact person full name.
-        order_reference:
-          type:
-          - string
-          - 'null'
-          example: O-9703
-          description: Falls back to the originating quote order_reference.
-        project_name:
-          type:
-          - string
-          - 'null'
-          example: Weekly Researcher task - May 5
-        description:
-          type:
-          - string
-          - 'null'
-        total_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 9.0
-          description: Line total in the customer-facing currency.
-        order_item:
-          $ref: '#/components/schemas/QuoteItem'
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     QuoteItem:
       type: object
       properties:
@@ -170,67 +148,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PriceLineEntry'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
-    PriceLineEntry:
-      type: object
-      properties:
-        price_unit_id:
-          type:
-          - integer
-          - 'null'
-          example: 12
-        service:
-          type:
-          - string
-          - 'null'
-          example: Culturalization
-        unit:
-          type:
-          - string
-          - 'null'
-          example: Hour
-        amount:
-          type: number
-          format: float
-          example: 0.55
-        unit_price:
-          type: number
-          format: float
-          example: 90.0
-        total:
-          type: number
-          format: float
-          example: 49.5
     Invoice:
       type: object
       properties:
@@ -303,6 +220,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLine'
+    InvoiceLine:
+      type: object
+      description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
+      properties:
+        requester:
+          type:
+          - string
+          - 'null'
+          example: Amber Russell
+          description: Order contact person full name.
+        order_reference:
+          type:
+          - string
+          - 'null'
+          example: O-9703
+          description: Falls back to the originating quote order_reference.
+        project_name:
+          type:
+          - string
+          - 'null'
+          example: Weekly Researcher task - May 5
+        description:
+          type:
+          - string
+          - 'null'
+        total_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 9.0
+          description: Line total in the customer-facing currency.
+        order_item:
+          $ref: '#/components/schemas/QuoteItem'
     QuoteCustomer:
       type:
       - object
@@ -327,6 +278,55 @@ components:
             01938 Ipswich
 
             United States'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    PriceLineEntry:
+      type: object
+      properties:
+        price_unit_id:
+          type:
+          - integer
+          - 'null'
+          example: 12
+        service:
+          type:
+          - string
+          - 'null'
+          example: Culturalization
+        unit:
+          type:
+          - string
+          - 'null'
+          example: Hour
+        amount:
+          type: number
+          format: float
+          example: 0.55
+        unit_price:
+          type: number
+          format: float
+          example: 90.0
+        total:
+          type: number
+          format: float
+          example: 49.5
   securitySchemes:
     cookie_session:
       type: apiKey

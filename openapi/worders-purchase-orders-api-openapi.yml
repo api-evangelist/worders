@@ -197,6 +197,18 @@ components:
           - string
           - 'null'
           format: date-time
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 50
     PurchaseOrderSummary:
       type: object
       properties:
@@ -236,18 +248,6 @@ components:
               format: uuid
             full_name:
               type: string
-    PaginationMeta:
-      type: object
-      properties:
-        total:
-          type: integer
-          example: 42
-        page:
-          type: integer
-          example: 1
-        per_page:
-          type: integer
-          example: 50
   securitySchemes:
     cookie_session:
       type: apiKey
