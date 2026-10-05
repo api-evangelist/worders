@@ -1,0 +1,12 @@
+{
+ "url": "https://api.worders.net/api-docs/v1/swagger.yaml",
+ "requested_url": "https://api.worders.net/api-docs/v1/swagger.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 38917,
+ "sha256": "ef0debe7af7580ad1f446e4a811521d5018a89cd26710fa35d6f32d3b04490d9",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
