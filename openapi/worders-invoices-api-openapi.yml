@@ -96,6 +96,79 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+          required:
+          - code
+          - message
+      required:
+      - error
+    PriceLineEntry:
+      type: object
+      properties:
+        price_unit_id:
+          type:
+          - integer
+          - 'null'
+          example: 12
+        service:
+          type:
+          - string
+          - 'null'
+          example: Culturalization
+        unit:
+          type:
+          - string
+          - 'null'
+          example: Hour
+        amount:
+          type: number
+          format: float
+          example: 0.55
+        unit_price:
+          type: number
+          format: float
+          example: 90.0
+        total:
+          type: number
+          format: float
+          example: 49.5
+    QuoteCustomer:
+      type:
+      - object
+      - 'null'
+      properties:
+        plunet_id:
+          type:
+          - integer
+          - 'null'
+          example: 12345
+        name:
+          type: string
+          example: EBSCO
+        address:
+          type:
+          - string
+          - 'null'
+          example: 'EBSCO
+
+            10 Estes Street
+
+            01938 Ipswich
+
+            United States'
     PaginationMeta:
       type: object
       properties:
@@ -108,46 +181,6 @@ components:
         per_page:
           type: integer
           example: 50
-    QuoteItem:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          example: I-44556
-          description: Plunet item id
-        plunet_id:
-          type:
-          - string
-          - 'null'
-          description: Same as id
-        language_source:
-          type:
-          - string
-          - 'null'
-          example: en-US
-        language_target:
-          type:
-          - string
-          - 'null'
-          example: fr-FR
-        client_price:
-          type:
-          - number
-          - 'null'
-          format: float
-          example: 49.5
-          description: Item price in the customer-facing currency.
-        status:
-          type:
-          - string
-          - 'null'
-          example: invoiced
-        price_line:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLineEntry'
     Invoice:
       type: object
       properties:
@@ -220,6 +253,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceLine'
+    QuoteItem:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: I-44556
+          description: Plunet item id
+        plunet_id:
+          type:
+          - string
+          - 'null'
+          description: Same as id
+        language_source:
+          type:
+          - string
+          - 'null'
+          example: en-US
+        language_target:
+          type:
+          - string
+          - 'null'
+          example: fr-FR
+        client_price:
+          type:
+          - number
+          - 'null'
+          format: float
+          example: 49.5
+          description: Item price in the customer-facing currency.
+        status:
+          type:
+          - string
+          - 'null'
+          example: invoiced
+        price_line:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLineEntry'
     InvoiceLine:
       type: object
       description: A single billable line on the invoice, flattened with grouping fields (requester, order_reference, project_name) so the consumer can group freely.
@@ -254,79 +327,6 @@ components:
           description: Line total in the customer-facing currency.
         order_item:
           $ref: '#/components/schemas/QuoteItem'
-    QuoteCustomer:
-      type:
-      - object
-      - 'null'
-      properties:
-        plunet_id:
-          type:
-          - integer
-          - 'null'
-          example: 12345
-        name:
-          type: string
-          example: EBSCO
-        address:
-          type:
-          - string
-          - 'null'
-          example: 'EBSCO
-
-            10 Estes Street
-
-            01938 Ipswich
-
-            United States'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type:
-              - object
-              - 'null'
-          required:
-          - code
-          - message
-      required:
-      - error
-    PriceLineEntry:
-      type: object
-      properties:
-        price_unit_id:
-          type:
-          - integer
-          - 'null'
-          example: 12
-        service:
-          type:
-          - string
-          - 'null'
-          example: Culturalization
-        unit:
-          type:
-          - string
-          - 'null'
-          example: Hour
-        amount:
-          type: number
-          format: float
-          example: 0.55
-        unit_price:
-          type: number
-          format: float
-          example: 90.0
-        total:
-          type: number
-          format: float
-          example: 49.5
   securitySchemes:
     cookie_session:
       type: apiKey
