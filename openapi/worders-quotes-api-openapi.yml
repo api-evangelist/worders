@@ -511,3 +511,9 @@ components:
       type: http
       scheme: bearer
       description: 'Service API key issued from the admin UI. Sent as `Authorization: Bearer wrd_live_…`.'
+x-provenance:
+  method: harvested
+  publisher: Worders
+  source: https://api.worders.net/api-docs/v1/swagger.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
